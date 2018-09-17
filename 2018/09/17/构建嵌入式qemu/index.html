@@ -12,17 +12,17 @@
   
 </title>
 
-<meta name="description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。 编译安装qemu为了避免一些依赖兼容性的问题，我用一个新建的ubuntu18.04做容器。 首先从github上下载qemu。 1">
+<meta name="description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="构建嵌入式qemu">
 <meta property="og:url" content="http://spikesec.cn/2018/09/17/构建嵌入式qemu/index.html">
 <meta property="og:site_name" content="Spike Security">
-<meta property="og:description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。 编译安装qemu为了避免一些依赖兼容性的问题，我用一个新建的ubuntu18.04做容器。 首先从github上下载qemu。 1">
+<meta property="og:description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-17T05:45:59.512Z">
+<meta property="og:updated_time" content="2018-09-17T07:02:56.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="构建嵌入式qemu">
-<meta name="twitter:description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。 编译安装qemu为了避免一些依赖兼容性的问题，我用一个新建的ubuntu18.04做容器。 首先从github上下载qemu。 1">
+<meta name="twitter:description" content="整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。">
 
 
   <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
@@ -170,6 +170,7 @@
   </div>
   <div class="article-entry">
     <p>整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。</p>
+<a id="more"></a>
 <h2 id="编译安装qemu"><a href="#编译安装qemu" class="headerlink" title="编译安装qemu"></a>编译安装qemu</h2><p>为了避免一些依赖兼容性的问题，我用一个新建的ubuntu18.04做容器。</p>
 <p>首先从github上下载qemu。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/qemu/qemu.git</span><br></pre></td></tr></table></figure>
