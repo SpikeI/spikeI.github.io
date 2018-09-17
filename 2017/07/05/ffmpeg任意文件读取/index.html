@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    ffmpeg任意文件读取
+  
+</title>
+
+<meta name="description" content="FFmpeg任意文件读取​    最近流行的任意文件读漏洞挺有意思">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg任意文件读取">
+<meta property="og:url" content="http://spikesec.cn/2017/07/05/ffmpeg任意文件读取/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="FFmpeg任意文件读取​    最近流行的任意文件读漏洞挺有意思">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://spikesec.cn/2017/07/05/ffmpeg任意文件读取/ffmpeg任意文件读取/leak.jpg">
+<meta property="og:image" content="http://spikesec.cn/2017/07/05/ffmpeg任意文件读取/ffmpeg任意文件读取/m3u8.jpg">
+<meta property="og:updated_time" content="2018-03-09T08:35:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ffmpeg任意文件读取">
+<meta name="twitter:description" content="FFmpeg任意文件读取​    最近流行的任意文件读漏洞挺有意思">
+<meta name="twitter:image" content="http://spikesec.cn/2017/07/05/ffmpeg任意文件读取/ffmpeg任意文件读取/leak.jpg">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-ffmpeg任意文件读取" class="article article-type-post">
+  
+    <h1 class="article-header">
+      ffmpeg任意文件读取
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-07-05
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="FFmpeg任意文件读取"><a href="#FFmpeg任意文件读取" class="headerlink" title="FFmpeg任意文件读取"></a>FFmpeg任意文件读取</h1><p>​    最近流行的任意文件读漏洞挺有意思</p>
+<a id="more"></a>
+<h3 id="0x1-了解"><a href="#0x1-了解" class="headerlink" title="0x1 了解"></a>0x1 了解</h3><p>​    FFmpeg是一套目前非常流行的可以用来记录、转换数字音频、视频，并能将其转化为流的开源计算机程序。它提供了录制、转换以及流化音视频的完整解决方案。目前有非常多的视音频软件或是视频网站、手机 APP 都采用了这个库，但是这个库历史上曝出的漏洞也非常之多。</p>
+<p>​    此次漏洞影响的版本包括3.2.2、3.2.5、3.1.2、2.6.8等等，新版本3.3.2中已经修复。</p>
+<p>​    Github上面已经有现成的利用脚本：<a href="https://github.com/neex/ffmpeg-avi-m3u-xbin.git" target="_blank" rel="noopener">https://github.com/neex/ffmpeg-avi-m3u-xbin.git</a></p>
+<p>​    通过这个脚本可以直接生成一个avi：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 gen_xbin_avi.py file:///etc/passwd exp.avi</span><br></pre></td></tr></table></figure>
+<p>​    上传生成的avi到有漏洞的程序，便会生成一个MP4，根据网页逻辑的不同可能以不同的方式展示，一般会在网站中直接播放。此时我们指定的文件内容便会在视频中播放出来。</p>
+<p><img src="ffmpeg任意文件读取\leak.jpg" alt="leak"></p>
+<p>​    看了Freebuf上面的文章，知道了ffmpeg曾经也是个问题项目，爆出过很多类似的漏洞，问题在于FFmpeg在处理HLS播放列表的过程中支持很多协议，http、file等协议，所以导致了ssrf的可能性。经过修补过后添加了白名单机制，但这次是通过内嵌在m3u8中的字幕文件绕过FFmepg的限制。</p>
+<h3 id="0x2-详情"><a href="#0x2-详情" class="headerlink" title="0x2 详情"></a>0x2 详情</h3><p>​    m3u8文件是一个索引文件，当播放器得到一个m3u8文件后不是直接播放该文件，他会根据索引后得到的文件去寻找资源，然后播放。其中它的格式中包含有很多标签，这里列出几个出现频率比较高的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#EXTM3U</span><br><span class="line">每个M3U文件第一行必须是这个tag，请标示作用</span><br><span class="line">#EXT-X-MEDIA-SEQUENCE:140651513 </span><br><span class="line">每一个media URI 在 PlayList中只有唯一的序号，相邻之间序号+1, 一个media URI并不是必须要包含的，如果没有，默认为0</span><br><span class="line">#EXTINF: duration </span><br><span class="line">指定每个媒体段(ts)的持续时间（秒），仅对其后面的URI有效，title是下载资源的url</span><br><span class="line">#EXT-X-KEY</span><br><span class="line">表示怎么对media segments进行解码。其作用范围是下次该tag出现前的所有media URI，属性为NONE 或者 AES-128。</span><br><span class="line">#EXT-X-BYTERANGE:该标签指定TS片是URI所指定资源的一个子范围</span><br><span class="line">格式为：#EXT-X-BYTERANGE:&lt;n&gt;[@&lt;o&gt;]</span><br><span class="line">其中n是一整数，表示子范围的字节长度。如果o存在，其也是个整数，表示开始的子范围，如果o不存在，则开始于上一个媒体段的下一个字节，并且上一个媒体段必须存在，并且必须是相同的媒体资源的子范围。</span><br></pre></td></tr></table></figure>
+<p>有了上面标签的解释，我们对这个刚刚我们生成的文件看起来就没有那么陌生了：</p>
+<p><img src="ffmpeg任意文件读取\m3u8.jpg" alt="m3u8"></p>
+<p>​    不过关键的地方还是在于可以使用file协议，在第二段直接引用了<code>/etc/passwd</code>。</p>
+<p>​    ffmpeg中处理playlist的方式是这样的：</p>
+<ol>
+<li>处理一个 playlist 的时候ffmpeg把所有 segment 的内容连接在一起然后当做一个单独的文件来处理</li>
+<li>ffmpeg会使用 playlist 第一个 segment 来决定文件的类型</li>
+<li>ffmpeg用一种特殊的方式来处理.txt后缀的文件，它会尝试将文件的内容以终端的方式打印在屏幕上</li>
+</ol>
+<p>​    解析playlist文件的时候，处理每个segment的协议是有白名单（file，crypto)的，所以不能进行ssrf。</p>
+<p>​    这个漏洞对于知道利用方法后利用很简单，现在只是知道了大概的原因，具体漏洞的实现原理还需要继续调试。</p>
+<h3 id="0x3-感想"><a href="#0x3-感想" class="headerlink" title="0x3 感想"></a>0x3 感想</h3><p>​    感觉这种任意文件读取的漏洞给WEB狗的印象大多数是知道并且会利用就好，但像这样的漏洞今年爆出了很多，都会引发很严重的后果。不知道在实际生产中能不能够遇到真实的案例。还是比较期待的。</p>
+<p>​    但另一方面讲，这样的漏洞每一个具体情况差别都很大，所以一直在考虑WEB怎样才能够有一个系统的学习路线，可以稳步的学习下去。希望在以后能够继续摸索下去，向这个方向继续努力吧。</p>
+<p>参考：</p>
+<p><a href="http://www.freebuf.com/column/142775.html" target="_blank" rel="noopener">http://www.freebuf.com/column/142775.html</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

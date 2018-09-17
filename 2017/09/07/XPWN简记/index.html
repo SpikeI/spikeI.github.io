@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    XPWN简记
+  
+</title>
+
+<meta name="description" content="XPWN简记​    昨天去了XPWN，见识了很多硬件大佬们的研究。今天整理一下以免以后忘记。">
+<meta name="keywords" content="Security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XPWN简记">
+<meta property="og:url" content="http://spikesec.cn/2017/09/07/XPWN简记/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="XPWN简记​    昨天去了XPWN，见识了很多硬件大佬们的研究。今天整理一下以免以后忘记。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-01T08:13:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XPWN简记">
+<meta name="twitter:description" content="XPWN简记​    昨天去了XPWN，见识了很多硬件大佬们的研究。今天整理一下以免以后忘记。">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-XPWN简记" class="article article-type-post">
+  
+    <h1 class="article-header">
+      XPWN简记
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-09-07
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Security/">Security</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="XPWN简记"><a href="#XPWN简记" class="headerlink" title="XPWN简记"></a>XPWN简记</h1><p>​    昨天去了XPWN，见识了很多硬件大佬们的研究。今天整理一下以免以后忘记。</p>
+<a id="more"></a>
+<p>​    大会上‘人类的朋友’们（xpwn上把黑客叫做人类的朋友）给我们带来的展示都让人大开眼界。就展示的项目来说，按照我的理解来划分在IOT领域现在的研究方向大概为：智能设备的移动端安全、网络协议安全、信息加密安全，以及少数传统的WEB安全。</p>
+<p>​    下面按照日程安排的顺序，挑几个我比较感兴趣的谈下我的想法：</p>
+<h3 id="为什么我的手机中多了个你"><a href="#为什么我的手机中多了个你" class="headerlink" title="为什么我的手机中多了个你"></a>为什么我的手机中多了个你</h3><p>​    主要讲了android的PWN，演示效果为在浏览器中点击链接即可安装或卸载app。android方面我不太懂，不过这个既然通过访问链接触发，那么应该是手机浏览器的漏洞，演示中使用的也是安卓自带的浏览器。其中分为5款不同的手机进行演示，说明在不同厂商的手机默认浏览器中都存在相似的问题。</p>
+<h3 id="共享单车≈无锁单车"><a href="#共享单车≈无锁单车" class="headerlink" title="共享单车≈无锁单车"></a>共享单车≈无锁单车</h3><p>​    这个是一个比较厉害的议题，原因其一是他们破解了如今用户量和影响范围都很大的ofo单车，其二是他们做到的不仅仅是免费骑车等功能，而是控制车锁。</p>
+<p>​    小黄车的破解过程大概是这样的（我的理解）：首先通过信号对交互信息进行简单的分析，然后通过固件逆向对小黄车客户端的逻辑进行分析，破解其加密过程后，可进行中间人攻击。演示效果为可以通过发射无线信号的基站伪造服务器端和客户端的消息。实现假装还车、劫持密码、篡改密码，以及修改固件逻辑以实现完全控制。</p>
+<p>​    我觉得这个比较厉害的点是小黄车的破解过程，整个破解过程用到的技术栈以及研究思路都很厉害，从最基础的信号嗅探分析，到固件逆向，OTA的漏洞挖掘，以及最后的通信行为分析及利用。如果掌握了这些技术栈，那么对如今很多常见的IOT设备都有进行安全测试的能力了。</p>
+<p>​    </p>
+<h3 id="深夜窗帘自动打开你会害怕吗"><a href="#深夜窗帘自动打开你会害怕吗" class="headerlink" title="深夜窗帘自动打开你会害怕吗"></a>深夜窗帘自动打开你会害怕吗</h3><p>​    这个议题是对京东微联app的攻击。</p>
+<p>​    其攻击情景是家中有智能设备，用户移动端有app，远端的服务器在前两者不在同一局域网内时提供协助。智能设备会和移动端的设备进行绑定，在正常情况下每个设备仅能和一台设备进行绑定。</p>
+<p>​    攻击效果为：以移动端安装恶意app，或以进入目标设备局域网为前提，攻击者服务器可以和智能设备进行绑定，并且获得智能设备的控制权。</p>
+<p>​    大佬们说这是对Joylink西医和BroadLink协议的攻击，这方面还不太了解，不明觉厉</p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h3 id="网络录像机，你要录给谁看"><a href="#网络录像机，你要录给谁看" class="headerlink" title="网络录像机，你要录给谁看"></a>网络录像机，你要录给谁看</h3><p>​    这个议题曾经一度热到了CCTV的舞台，NVR的最最普遍，最最广泛的漏洞类型就是弱口令了。XPWN的大佬们专门对摄像头进行了分析统计了很多网络摄像头的安全隐患，以及很多摄像头都没有做固件的加密。</p>
+<p>​    最终实现的效果是针对特定厂商的设备，若开放了web服务作为后台，即可以像后台添加管理员，共而获取对摄像头的控制器权。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>​    当然还有很多其他厉害的议题，比如‘你希望有人跟踪你么’是利用ROM漏洞绕过权限管理，‘请问这是你的艳照吗’实现了对sony微单的入侵和信息窃取。现场大佬下台的时候，我从容冷静的关掉了手中微单的电源，嗯:sweat:。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

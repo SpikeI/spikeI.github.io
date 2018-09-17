@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    记一次MVVM的网站开发
+  
+</title>
+
+<meta name="description" content="记一次MVVM的网站开发">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次MVVM的网站开发">
+<meta property="og:url" content="http://spikesec.cn/2017/11/28/记一次MVVM的网站开发/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="记一次MVVM的网站开发">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-01T08:13:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次MVVM的网站开发">
+<meta name="twitter:description" content="记一次MVVM的网站开发">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-记一次MVVM的网站开发" class="article article-type-post">
+  
+    <h1 class="article-header">
+      记一次MVVM的网站开发
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2017-11-28
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="记一次MVVM的网站开发"><a href="#记一次MVVM的网站开发" class="headerlink" title="记一次MVVM的网站开发"></a>记一次MVVM的网站开发</h1><a id="more"></a>
+<p>网站开发有了先前的经验，相对有着手点，但其中包含更多的问题在其中。</p>
+<ol>
+<li>功能需求</li>
+<li>新型框架的使用。VUE、Flask</li>
+<li>任务的分配，代码的维护</li>
+<li>稳定性分析</li>
+</ol>
+<h4 id="功能需求"><a href="#功能需求" class="headerlink" title="功能需求"></a>功能需求</h4><p>​    功能需求调查的不是很明确，使得开发效率很低。甚至最后的实用性都不是很强。以此为戒（虽然这次是抱着学习网站开发技术的心态来做的，XD）。</p>
+<h4 id="任务的分配、代码的维护"><a href="#任务的分配、代码的维护" class="headerlink" title="任务的分配、代码的维护"></a>任务的分配、代码的维护</h4><p>​    分成两个组分别进行开发，每个组维护一条dev线。master融合其他线。每组中分为前端和后端。维护git的代码的确很浪费精力。分成两个分支后，若分支分离的不是特别干净，在每次融合到master的时候都需要进行处理冲突。每个晓得模块实现完成后都要和master进行融合并且打tag。</p>
+<p>​    由于人手有限，时间紧张。前端后端的接口详情通过维护一个文本文件的方式进行沟通，首先根据需求制定好接口信息，将其写入文件中，前端和后端再根据这个接口进行开发。</p>
+<p>​    在开发前，先定好变量，注释等规范。尽量丰富代码的规范性，在合理的范围内尽量对代码进行封装，增加可读性，并且可以及时溯源。</p>
+<h4 id="VUE和Flask"><a href="#VUE和Flask" class="headerlink" title="VUE和Flask"></a>VUE和Flask</h4><p>​    通过一段时间对VUE、flask的学习，才开始进行开发。</p>
+<p>​    flask简单优雅，蓝图功能更使得水平扩展变得简单。很多wtform、message、login等插件很好用。但这里我们用flask作为api接口，界面和路由全部由VUE实现。</p>
+<p>​    VUE实现路由和界面，参考了饿了么和pwnhub。使用element ui中的插件。</p>
+<p>​    其中产生了一个问题就是restful uri在使用过程中如果从本页面跳转则可以正常访问，若直接访问则无法正常访问。解决办法有两种一是讲所有的uri跳转都跳到我们的入口页面上。而是将404设置成路由页面。</p>
+<p>​    还有一些细节，比如权限的控制和后台地址的发放，不同级别的用户得到的信息是不同的，可获取用户数据的api是经过严格访问控制的。cookie使用httponly的<code>app.config[&quot;SESSION_COOKIE_HTTPONLY&quot;] = True</code>，使用CSRF token来确保不被CSRF攻击。上传文件的文件名有特殊要求，并且对上传文件的文件名进行特殊处理，使上传者不能预测到文件名，且用户名都将以合法字符保存。由于在vue中自动进行了实体编码转换，所以暂时没有特殊考虑XSS的问题。关注了Flask模板自身的漏洞，模板注入（该漏洞需要flask和jinja2配合使用，我们没有该问题。）</p>
+<p>​    在网页布局和前端方面耽误了很长时间，在那之后对前端大大的敬畏之心又加深了不少。</p>
+<h4 id="其他工作"><a href="#其他工作" class="headerlink" title="其他工作"></a>其他工作</h4><p>​    最后，开发之前要考虑维护成本以及维护人员的数量。依此来进行一些开发任务的选择，舍弃一些维护成本比较高的，以实用性稍差点，但维护成本比较低的来代替。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

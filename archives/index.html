@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    Archive
+  
+</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Spike Security">
+<meta property="og:url" content="http://spikesec.cn/archives/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spike Security">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          
+
+  
+  
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <h1><a href="/archives/2018" class="archive-year">2018</a></h1>
+        </div>
+        <div class="post-list">
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/09/17/构建嵌入式qemu/" >
+  构建嵌入式qemu
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/09/17/构建嵌入式qemu/"><span class="article-date">
+  2018-09-17
+</span>
+</a>
+        
+
+        
+
+      </div>
+      <div class="article-entry">
+        
+          <p>整体的思路是先编译安装好qemu，从网上下载kernel和initrd用于安装系统，将系统安装在我们创建的硬盘镜像中，由于没有grub我们需要从img中提取出initrd用于系统的boot。提取出后通过kernel、initrd和安装好的filesystem运行程序。</p>
+<h2 id="编译安装qemu"><a href="#编译安装qemu" class="headerlink" title="编译安装qemu"></a>编译安装qemu</h2><p>为了避免一些依赖兼容性的问题，我用一个新建的ubuntu18.04做容器。</p>
+<p>首先从github上下载qemu。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/qemu/qemu.git</span><br></pre></td></tr></table></figure>
+<p>在安装前需要装一些依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libboost-all-dev autoconf libtool libssl-dev libpixman-1-dev libpython-dev python-pip python-capstone virtualenv bison flex</span><br></pre></td></tr></table></figure>
+<p>编译时的配置信息如下（选了一大堆架构列表，把qemu装在/opt/qemu中）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --target-list=arm-softmmu,mips-softmmu,mips64-softmmu,mips64el-softmmu,mipsel-softmmu,aarch64-softmmu,arm-linux-user,aarch64-linux-user,mips64el-linux-user,mipsel-linux-user,mips-linux-user,mips64-linux-user --prefix=/opt/qemu --python=/usr/bin/python2.7</span><br></pre></td></tr></table></figure>
+<p>然后<code>make &amp;&amp; sudo make install</code>一把梭。</p>
+<h2 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h2><p>首先我们需要从网上下载kernel和initrd。去镜像站就可以下载到，比如（我这里用的ubuntu的来安装）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://mirrors.tuna.tsinghua.edu.cn/debian/dists/buster/main/installer-armhf/current/images/netboot/</span><br></pre></td></tr></table></figure>
+<p>创建一个空的filesystem：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-img create -f qcow2 ubuntu.img 16G</span><br></pre></td></tr></table></figure>
+<p>现在我们拿到了kernel、initrd和新的硬盘镜像了，然后需要在qemu里面安装系统了，我的安装方法如下，记得append时要把filesystem的地址改成ram，原因是要把驱动安装程序放在内存中运行，kernel和initrd指定之前下载好的就好（注意内存设置的不要比虚拟机大否则会崩掉）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /opt/qemu/bin/qemu-system-arm -m 1024 -M virt -cpu cortex-a15 -smp cpus=4,maxcpus=4 -kernel /home/spike/vmlinuz -initrd /home/spike/initrd.gz -append &quot;root=/dev/ram&quot; -drive file=/home/spike/ubuntu.img,if=none,format=qcow2,id=hd0 -device virtio-blk-device,drive=hd0 -netdev type=tap,id=net0 -device virtio-net-device,netdev=net0,mac=52:54:00:fa:ee:10 -nographic</span><br></pre></td></tr></table></figure>
+<p>在安装时，会遇到需要网络的情况（安装一半会卡住），我们需要手动配置一下网络，这里我们看到我们的网卡名字是enp0s25（这个改成自己的），qemu运行后开启的网卡名字叫tap0，我们配置一下tap0的iptables，并设置好ip。这里注意一下需要先启动qemu，我们修改qemu创建的接口（tap0），如果我们自己创建一个tap0的话qemu运行时不会直接使用这个tap0，会重新创建一个tap1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -w net.ipv4.ip_forward=1</span><br><span class="line"></span><br><span class="line">sudo iptables -F</span><br><span class="line">sudo iptables -X</span><br><span class="line">sudo iptables -t nat -F</span><br><span class="line">sudo iptables -t nat -X</span><br><span class="line">sudo iptables -t mangle -F</span><br><span class="line">sudo iptables -t mangle -X</span><br><span class="line">sudo iptables -P INPUT ACCEPT</span><br><span class="line">sudo iptables -P FORWARD ACCEPT</span><br><span class="line">sudo iptables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line">sudo iptables -t nat -A POSTROUTING -o enp0s25 -j MASQUERADE</span><br><span class="line">sudo iptables -I FORWARD 1 -i tap0 -j ACCEPT</span><br><span class="line">sudo iptables -I FORWARD 1 -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line"></span><br><span class="line">inet_ip = 192.168.100.2</span><br><span class="line">sudo ifconfig tap0 192.168.100.254 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>运行这些命令后qemu里面才能上网</p>
+<p>然后在qemu的安装界面，我们配置一下固定的IP，就是脚本里面改的IP(任意一个C段网都行，不要和宿主机的网段一样就好，这里配成了192.168.100.2)。网关填写tap0的地址，DNS设置自己的DNS，如果不知道就设置成8.8.8.8或114.114.114.114。</p>
+<p>安装要过很久，建议晚上睡前安，第二天收割img。</p>
+<p>安装好了后会有提示系统没法boot，这是正常的，毕竟我们没有grub，直接退出安装就好了。</p>
+<h2 id="启动安装好的系统"><a href="#启动安装好的系统" class="headerlink" title="启动安装好的系统"></a>启动安装好的系统</h2><p>由于我们没有grub帮助我们boot，所以我门需要把initrd从qcow2中提取出来，单独指定给qemu。这是我们需要一个工具<code>libguestfs-tools</code>。apt一把梭。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libguestfs-tools -yf</span><br></pre></td></tr></table></figure>
+<p>用virt-ls看一下initrd的文件名（别问我问啥要加这两个环境变量，log提示我加的）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBGUESTFS_DEBUG=1 LIBGUESTFS_TRACE=1 sudo virt-ls ubuntu.img /boot/</span><br></pre></td></tr></table></figure>
+<p>然后把initrd copy出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBGUESTFS_DEBUG=1 LIBGUESTFS_TRACE=1 sudo virt-copy-out -a ubuntu.img /boot/initrd.img-4.4.0-135-generic-lpae ./</span><br></pre></td></tr></table></figure>
+<p>后面我们就用拷贝出来的initrd，安装好的filesystem——ubunut.img，以及kernel将ubuntu运行起来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /opt/qemu/bin/qemu-system-arm -m 1024 -M virt -cpu cortex-a15 -smp cpus=4,maxcpus=4 -kernel ./vmlinuz -initrd ./initrd.img-4.4.0-135-generic-lpae -append &quot;root=/dev/vda2&quot; -drive file=./ubuntu.img,if=none,format=qcow2,id=hd0 -device virtio-blk-device,drive=hd0 -netdev type=tap,id=net0 -device virtio-net-device,netdev=net0,mac=52:54:00:fa:ee:10 -nographic</span><br></pre></td></tr></table></figure>
+<p>这里把root改成/dev/vda2，从硬盘中得到filesystem。运行后我们还是需要修改一下tap0的iptables和网络配置(nat映射神马的，这样外网可以访问)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">sudo sysctl -w net.ipv4.ip_forward=1</span><br><span class="line"></span><br><span class="line">echo &quot;Stopping firewall and allowing everyone...&quot;</span><br><span class="line">sudo iptables -F</span><br><span class="line">sudo iptables -X</span><br><span class="line">sudo iptables -t nat -F</span><br><span class="line">sudo iptables -t nat -X</span><br><span class="line">sudo iptables -t mangle -F</span><br><span class="line">sudo iptables -t mangle -X</span><br><span class="line">sudo iptables -P INPUT ACCEPT</span><br><span class="line">sudo iptables -P FORWARD ACCEPT</span><br><span class="line">sudo iptables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line">sudo iptables -t nat -A POSTROUTING -o enp0s25 -j MASQUERADE</span><br><span class="line">sudo iptables -I FORWARD 1 -i tap0 -j ACCEPT</span><br><span class="line">sudo iptables -I FORWARD 1 -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line"></span><br><span class="line">inet_ip = 192.168.100.2</span><br><span class="line"></span><br><span class="line">sudo iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 1022 -j DNAT --to-destination $inet_ip:22</span><br><span class="line">sudo iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 1080 -j DNAT --to-destination $inet_ip:80</span><br><span class="line">sudo iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 10443 -j DNAT --to-destination $inet_ip:443</span><br><span class="line"></span><br><span class="line">echo &quot;Booting VM, eta 10 seconds&quot;</span><br><span class="line">sleep 10</span><br><span class="line">sudo ifconfig tap0 192.168.100.254 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>到这里我们的嵌入式虚拟环境就搭建好了。</p>
+
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/09/07/安不上的Keypatch/" >
+  安不上的Keypatch
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/09/07/安不上的Keypatch/"><span class="article-date">
+  2018-09-07
+</span>
+</a>
+        
+
+        
+
+      </div>
+      <div class="article-entry">
+        
+          <h3 id="0x1keypatch"><a href="#0x1keypatch" class="headerlink" title="0x1keypatch"></a>0x1keypatch</h3><p>​    Keypatch是一款很好用的IDA插件，基于Keystone。可直接在汇编上右键修改，作为二进制小白的我每次都需要去查汇编指令的字节码才能patch。有了这个腰不酸了腿不疼了，patch起来很无脑。</p>
+          <p>
+            <a href="/2018/09/07/安不上的Keypatch/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/03/02/shell脚本学习/" >
+  shell脚本学习
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/03/02/shell脚本学习/"><span class="article-date">
+  2018-03-02
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="shell脚本学习"><a href="#shell脚本学习" class="headerlink" title="shell脚本学习"></a>shell脚本学习</h1><p>​    简单学习下shell脚本的编写，通过脚本来增加工作效率，快速搭建环境或批量操作。</p>
+          <p>
+            <a href="/2018/03/02/shell脚本学习/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/03/02/Python-WEB安全问题总结/" >
+  Python_WEB安全问题总结
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/03/02/Python-WEB安全问题总结/"><span class="article-date">
+  2018-03-02
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="Python-WEB安全问题总结"><a href="#Python-WEB安全问题总结" class="headerlink" title="Python_WEB安全问题总结"></a>Python_WEB安全问题总结</h1><p>总结了一些网上的python web安全问题。</p>
+          <p>
+            <a href="/2018/03/02/Python-WEB安全问题总结/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/02/02/CRLF漏洞利用方法/" >
+  CRLF漏洞利用方法
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/02/02/CRLF漏洞利用方法/"><span class="article-date">
+  2018-02-02
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="CRLF-漏洞利用方法"><a href="#CRLF-漏洞利用方法" class="headerlink" title="CRLF 漏洞利用方法"></a>CRLF 漏洞利用方法</h1><p>​    简单记录下CRLF漏洞。</p>
+          <p>
+            <a href="/2018/02/02/CRLF漏洞利用方法/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/01/27/小密圈知识整理/" >
+  小密圈知识整理
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/01/27/小密圈知识整理/"><span class="article-date">
+  2018-01-27
+</span>
+</a>
+        
+
+        
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="小密圈知识整理"><a href="#小密圈知识整理" class="headerlink" title="小密圈知识整理"></a>小密圈知识整理</h1><p>​    （持续更新）</p>
+<p>​    很多东西在小密圈看到之后感觉很不错，但是时间长就忘了。所以打算用博客mark一下。</p>
+          <p>
+            <a href="/2018/01/27/小密圈知识整理/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/01/27/云waf绕过方法/" >
+  云waf绕过方法
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/01/27/云waf绕过方法/"><span class="article-date">
+  2018-01-27
+</span>
+</a>
+        
+
+        
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="云WAF绕过方法整理"><a href="#云WAF绕过方法整理" class="headerlink" title="云WAF绕过方法整理"></a>云WAF绕过方法整理</h1><p>​    最近在接触一些有关绕过云WAF的问题，之前之了解一些，下面整理一下了解到的方法。</p>
+          <p>
+            <a href="/2018/01/27/云waf绕过方法/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2018/01/20/赛博杯WP/" >
+  赛博杯WP
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2018/01/20/赛博杯WP/"><span class="article-date">
+  2018-01-20
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="赛博杯WP"><a href="#赛博杯WP" class="headerlink" title="赛博杯WP"></a>赛博杯WP</h1><p>​    这次打比赛的时候在准备论文，题目也只是看了看，小伙伴很给力，WEB做了很多。比赛后看了下题目，写了这个WP，其中很多工作都是建立在大佬Dlive的工作之上。</p>
+          <p>
+            <a href="/2018/01/20/赛博杯WP/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <h1><a href="/archives/2017" class="archive-year">2017</a></h1>
+        </div>
+        <div class="post-list">
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2017/12/21/快速搭建环境/" >
+  快速搭建环境
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2017/12/21/快速搭建环境/"><span class="article-date">
+  2017-12-21
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="快速搭建环境"><a href="#快速搭建环境" class="headerlink" title="快速搭建环境"></a>快速搭建环境</h1><p>​    身为WEB狗会经常面临验洞1分钟，环境1小时的窘境。</p>
+<p>​    所以我在不断的摸索在这个过程中尽量的节省一些时间。</p>
+          <p>
+            <a href="/2017/12/21/快速搭建环境/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+  
+  
+    
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/2017/11/28/记一次MVVM的网站开发/" >
+  记一次MVVM的网站开发
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/2017/11/28/记一次MVVM的网站开发/"><span class="article-date">
+  2017-11-28
+</span>
+</a>
+        
+
+        
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+	</span>
+
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="记一次MVVM的网站开发"><a href="#记一次MVVM的网站开发" class="headerlink" title="记一次MVVM的网站开发"></a>记一次MVVM的网站开发</h1>
+          <p>
+            <a href="/2017/11/28/记一次MVVM的网站开发/">
+              Read More
+            </a>
+          </p>
+        
+      </div>
+    </div>
+
+  
+
+
+
+  <div class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next</a>
+  </div>
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    shell脚本学习
+  
+</title>
+
+<meta name="description" content="shell脚本学习​    简单学习下shell脚本的编写，通过脚本来增加工作效率，快速搭建环境或批量操作。">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell脚本学习">
+<meta property="og:url" content="http://spikesec.cn/2018/03/02/shell脚本学习/index.html">
+<meta property="og:site_name" content="Spike Security">
+<meta property="og:description" content="shell脚本学习​    简单学习下shell脚本的编写，通过脚本来增加工作效率，快速搭建环境或批量操作。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-16T16:15:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell脚本学习">
+<meta name="twitter:description" content="shell脚本学习​    简单学习下shell脚本的编写，通过脚本来增加工作效率，快速搭建环境或批量操作。">
+
+
+  <link rel="alternative" href="/atom.xml" title="Spike Security" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">Spike Security</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">Spike Security</a></h1>
+    
+    <div class="info">
+      <div class="content">
+        
+        
+          <div class="author">Spike</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="/images/cc/avatar.jpeg"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">Category</a>
+                
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">Tag</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">Archive</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">10</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="Homepage">Homepage</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="By Year">By Year</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="http://weibo.com/spikex" title="Weibo" target="_blank" rel="noopener">Weibo</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/SpikeI" title="Github" target="_blank" rel="noopener">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-shell脚本学习" class="article article-type-post">
+  
+    <h1 class="article-header">
+      shell脚本学习
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2018-03-02
+</span>
+
+    
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <h1 id="shell脚本学习"><a href="#shell脚本学习" class="headerlink" title="shell脚本学习"></a>shell脚本学习</h1><p>​    简单学习下shell脚本的编写，通过脚本来增加工作效率，快速搭建环境或批量操作。</p>
+<a id="more"></a>
+<h4 id="指定解释器"><a href="#指定解释器" class="headerlink" title="指定解释器"></a>指定解释器</h4><p>通常第一行会来制定执行脚本的解释器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br></pre></td></tr></table></figure>
+<p>意为使用bash来解释脚本。</p>
+<h4 id="脚本中的特殊参数"><a href="#脚本中的特殊参数" class="headerlink" title="脚本中的特殊参数"></a>脚本中的特殊参数</h4><table>
+<thead>
+<tr>
+<th>参数标识符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0</td>
+<td>文件本身的名字</td>
+</tr>
+<tr>
+<td>$1</td>
+<td>表示位置的参数，第一个参数传递给脚本。</td>
+</tr>
+<tr>
+<td>${10}</td>
+<td>在超过两位数的参数时，使用大括号限定</td>
+</tr>
+<tr>
+<td>$#</td>
+<td>参数个数</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>表示所有的参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="引号的区别"><a href="#引号的区别" class="headerlink" title="引号的区别"></a>引号的区别</h4><p>双引号和单引号都可以包裹字符串。但双引号中的变量会被替换，单引号不会。</p>
+<p>如运行如下的a.sh:<code>bash a.sh first</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a.sh:</span><br><span class="line">echo &quot;spike $1&quot;   //打印 spike first</span><br><span class="line">echo &apos;spike $1&apos;   //打印 spike $1</span><br></pre></td></tr></table></figure>
+<h4 id="特殊操作符-和"><a href="#特殊操作符-和" class="headerlink" title="特殊操作符$()和"></a>特殊操作符$()和<code></code></h4><p>在下面的语句中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;filename : $(basename $0)&quot;</span><br></pre></td></tr></table></figure>
+<p>会先执行<code>basename $0</code>然后将输出拼接到字符串中，反引号同理。</p>
+<h4 id="调试脚本"><a href="#调试脚本" class="headerlink" title="调试脚本"></a>调试脚本</h4><p>使用<code>-v</code>和<code>-x</code>参数可以调试脚本。它可以输出执行的语句以及每句的执行结果。</p>
+<h4 id="一些比较有用的脚本"><a href="#一些比较有用的脚本" class="headerlink" title="一些比较有用的脚本"></a>一些比较有用的脚本</h4><p>杀死进程的脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">current_PID=$$</span><br><span class="line">ps -aux | grep &quot;/usr/sbin/httpd&quot; | grep -v &quot;grep&quot; | awk &apos;&#123;print $2&#125;&apos; &gt; /tmp/$&#123;current_PID&#125;.txt</span><br><span class="line">for pid in `cat /tmp/$&#123;current_PID&#125;.txt`</span><br><span class="line">do</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;kill -9 $pid&quot;</span><br><span class="line">    kill -9 $pid</span><br><span class="line">&#125;</span><br><span class="line">done</span><br><span class="line">rm -f /tmp/$&#123;current_PID&#125;.txt</span><br></pre></td></tr></table></figure>
+<p>删除主机日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">list=(</span><br><span class="line">/var/log/cron</span><br><span class="line">/var/log/dmesg</span><br><span class="line">/var/log/lastlog</span><br><span class="line">/var/log/maillog</span><br><span class="line">/var/log/mail/*</span><br><span class="line">/var/log/messages</span><br><span class="line">/var/log/secure</span><br><span class="line">/var/log/wtmp</span><br><span class="line">/var/log/faillog</span><br><span class="line">/var/log/httpd/*</span><br><span class="line">/var/log/news/*</span><br><span class="line">/var/log/samba/*</span><br><span class="line">~/.bash_history</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">for path in $&#123;list[@]&#125;</span><br><span class="line">do</span><br><span class="line">    rm $&#123;path&#125; -rf</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.cnblogs.com/IcanFixIt/p/6769571.html" target="_blank" rel="noopener">https://www.cnblogs.com/IcanFixIt/p/6769571.html</a></p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
+
+
+    
+
+  </footer>
+</article>
+
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2018 Spike Security - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>
